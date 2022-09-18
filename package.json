@@ -1,5 +1,5 @@
 {
-  "name": "Renters",
+  "name": "renters",
   "version": "1.0.0",
   "description": "A web app for finding affordable and effective Rentals nearby.",
   "main": "app.js",
