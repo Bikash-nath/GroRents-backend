@@ -4,7 +4,7 @@
   "description": "A web app for finding affordable and effective Rentals nearby.",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "start:prod": "NODE_ENV=production nodemon server.js"
   },
   "author": "Bikash",
@@ -19,9 +19,11 @@
     "slugify": "^1.6.5",
     "validator": "^13.7.0"
   },
+  "engines": {
+    "node": ">=10.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Spartan-21/Renters.git"
-  },
-  "homepage": "https://github.com/Spartan-21/Renters#readme"
+  }
 }
