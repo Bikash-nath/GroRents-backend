@@ -12,8 +12,8 @@ const houseSchema = new mongoose.Schema({
   },
   slug: String,
   availability: {
-    type: Number,
-    required: [true, 'A house must have availability status'],
+    type: Date,
+    required: [true, 'A house must have availability date'],
   },
   carpetArea: {
     type: Number, //In sq. feet

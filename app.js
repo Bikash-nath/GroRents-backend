@@ -15,18 +15,16 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(compression());
-
 app.use(express.json());
-app.use(express.static(`${__dirname}/public`));
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
 });
 
-// 3) ROUTES
-app.use('/api/v1/houses', houseRouter);
-app.use('/api/v1/users', userRouter);
+// 2) ROUTES
+app.use('/api/houses', houseRouter);
+app.use('/api/users', userRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
