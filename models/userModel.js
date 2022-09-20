@@ -18,9 +18,28 @@ const userSchema = new mongoose.Schema({
   photo: String,
   role: {
     type: String,
-    enum: ['user', 'guide', 'lead-guide', 'admin'],
+    enum: ['user', 'owner', 'admin'],
     default: 'user',
   },
+  phoneNo: {
+    type: String,
+    minlength: 10,
+    required: [true, 'Please provide a valid phone number'],
+  },
+  gender: {
+    type: String,
+    enum: ['male', 'female', 'transgender'],
+  },
+  dob: {
+    type: Date,
+    validate: {
+      validator: (date) => {
+        return date <= Date();
+      },
+      message: 'Your DOB should be less than current date',
+    },
+  },
+  address: String,
   password: {
     type: String,
     required: [true, 'Please provide a password'],

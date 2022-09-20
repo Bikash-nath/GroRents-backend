@@ -18,13 +18,7 @@ const houseSchema = new mongoose.Schema({
   propertyType: {
     type: String,
     enum: {
-      values: [
-        'Apartment',
-        'Residential Apartment',
-        'Flat',
-        'Commercial Flat',
-        'House',
-      ],
+      values: ['Apartment', 'Residential Apartment', 'Flat', 'Commercial Flat', 'House', 'Studio'],
     },
   },
   availableFor: {
