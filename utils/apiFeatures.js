@@ -13,5 +13,13 @@ class APIFeatures {
     }
     return this;
   }
+
+  limitFields() {
+    const fields =
+      'title carpetArea maxTenants availableFor price deposit verified furnishing availability address imageCover bedroomsCount bathroomsCount';
+    this.query = this.query.select(fields);
+
+    return this;
+  }
 }
 module.exports = APIFeatures;

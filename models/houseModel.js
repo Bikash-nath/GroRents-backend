@@ -11,10 +11,6 @@ const houseSchema = new mongoose.Schema({
     minlength: [10, 'A house title must have more or equal then 10 characters'],
   },
   slug: String,
-  availability: {
-    type: Date,
-    required: [true, 'A house must have availability date'],
-  },
   carpetArea: {
     type: Number, //In sq. feet
     required: [true, 'A house must have carpet/plot area'],
@@ -22,7 +18,13 @@ const houseSchema = new mongoose.Schema({
   propertyType: {
     type: String,
     enum: {
-      values: ['Apartment', 'Residential Apartment', 'Flat', '..'],
+      values: [
+        'Apartment',
+        'Residential Apartment',
+        'Flat',
+        'Commercial Flat',
+        'House',
+      ],
     },
   },
   availableFor: {
@@ -31,7 +33,7 @@ const houseSchema = new mongoose.Schema({
       values: ['All', 'Family', 'Bachelors'],
     },
   },
-  maxTenant: {
+  maxTenants: {
     type: Number,
     required: [true, 'A house must have a maximum tenant size'],
   },
@@ -51,14 +53,21 @@ const houseSchema = new mongoose.Schema({
     type: String,
     trim: true,
   },
+  availability: {
+    type: Date,
+    required: [true, 'A house must have availability date'],
+  },
   postedOn: {
     type: Date,
     default: Date.now(),
-    select: false,
   },
   constructionYear: {
     type: Number,
     required: [true, 'A property must have a contruction date'],
+  },
+  verified: {
+    type: Boolean,
+    default: false,
   },
   furnishing: {
     type: String,
