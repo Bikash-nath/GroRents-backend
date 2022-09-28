@@ -18,7 +18,14 @@ const houseSchema = new mongoose.Schema({
   propertyType: {
     type: String,
     enum: {
-      values: ['Apartment', 'Residential Apartment', 'Flat', 'Commercial Flat', 'House', 'Studio'],
+      values: [
+        'Apartment',
+        'Residential Apartment',
+        'Flat',
+        'Commercial Flat',
+        'House',
+        'Studio',
+      ],
     },
   },
   availableFor: {
@@ -159,5 +166,4 @@ const houseSchema = new mongoose.Schema({
 });
 
 const House = mongoose.model('houses', houseSchema);
-
 module.exports = House;
