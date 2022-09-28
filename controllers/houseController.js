@@ -30,7 +30,7 @@ exports.getHouse = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createHouses = catchAsync(async (req, res, next) => {
+exports.createHouse = catchAsync(async (req, res, next) => {
   const newHouse = await House.create(req.body);
 
   res.status(201).json({
