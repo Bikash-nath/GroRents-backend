@@ -7,12 +7,18 @@ const router = express.Router();
 router
   .route('/')
   .get(houseController.getAllHouses)
-  .post(authController.protect, houseController.createHouses);
+  .post(authController.protect, 
+    authController.restrictTo('owner', 'admin'),
+    houseController.createHouses);
 
 router
   .route('/:id')
   .get(authController.protect, houseController.getHouse)
-  .patch(authController.protect, houseController.updateHouse)
-  .delete(authController.protect, houseController.deleteHouse);
+  .patch(authController.protect, 
+    authController.restrictTo('owner', 'admin'),
+    houseController.updateHouse)
+  .delete(authController.protect, 
+    authController.restrictTo('owner', 'admin'),
+    houseController.deleteHouse);
 
 module.exports = router;

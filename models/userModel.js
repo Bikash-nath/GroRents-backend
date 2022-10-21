@@ -15,30 +15,38 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     validate: [validator.isEmail, 'Please provide a valid email'],
   },
-  photo: String,
-  role: {
-    type: String,
-    enum: ['user', 'owner', 'admin'],
-    default: 'user',
-  },
   phoneNo: {
     type: String,
+    minlength: [10, 'Please provide a valid 10-digit phone number'],
     maxlength: [10, 'Please provide a valid 10-digit phone number'],
   },
+  photo: String,
   gender: {
     type: String,
-    enum: ['male', 'female', 'transgender'],
+    enum: ['Male', 'Female', 'Transgender'],
   },
   dob: {
     type: Date,
     validate: {
       validator: (date) => {
-        return date <= Date();
+        return (
+          date <=
+          new Date(new Date().setFullYear(new Date().getFullYear() - 10))
+        );
       },
-      message: 'Your DOB should be less than current date',
+      message: 'Your Age should be greater than 10 years',
     },
   },
-  address: String,
+  address: {
+    type: mongoose.Schema.ObjectId,
+    ref: 'Address'
+},
+  occupation: String,
+  role: {
+    type: String,
+    enum: ['user', 'owner', 'guide', 'admin'],
+    default: 'user',
+  },
   password: {
     type: String,
     required: [true, 'Please provide a password'],
@@ -66,6 +74,7 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+// QUERY MIDDLEWARE
 userSchema.pre('save', async function (next) {
   // Only run this function if password was actually modified
   if (!this.isModified('password')) return next();
@@ -78,8 +87,9 @@ userSchema.pre('save', async function (next) {
 });
 
 userSchema.pre('save', function (next) {
-  if (!this.isModified('password') || this.isNew) return next();
-
+  if (!this.isModified('password') || this.isNew) {
+    return next();
+  }
   this.passwordChangedAt = Date.now() - 1000; //saving user in Db before issuing JWT
   next();
 });

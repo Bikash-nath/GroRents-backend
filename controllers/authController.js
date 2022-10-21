@@ -14,6 +14,16 @@ const signToken = (id) => {
 
 const createSendToken = (user, statusCode, res) => {
   const token = signToken(user._id);
+  const cookieOptions = {
+    expires: new Date(
+      Date.now() + process.env.JWT_COOKIE_EXPIRES_IN * 24 * 60 * 60 * 1000
+    ),
+    httpOnly: true
+  };
+  if (process.env.NODE_ENV === 'production') cookieOptions.secure = true;
+
+  res.cookie('jwt', token, cookieOptions);
+  
   user.password = undefined; // Remove password from output
 
   res.status(statusCode).json({
@@ -29,6 +39,12 @@ exports.signup = catchAsync(async (req, res, next) => {
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
+    phoneNo: req.body.phoneNo,
+    gender: req.body.gender,
+    dob: req.body.dob,
+    photo: req.body.photo,
+    occupation: req.body.occupation,
+    address: req.body.address,
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
   });
@@ -50,7 +66,7 @@ exports.login = catchAsync(async (req, res, next) => {
     return next(new AppError('Incorrect email or password', 401));
   }
 
-  // 3) Send token to client
+  // 3) Send JWT to client
   createSendToken(user, 200, res);
 });
 
@@ -95,6 +111,17 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = currentUser;
   next();
 });
+
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError('You do not have permission to perform this action', 403)
+      );
+    }
+    next();
+  };
+};
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 1) Get user based on POSTed email
@@ -154,6 +181,6 @@ exports.updatePassword = catchAsync(async (req, res, next) => {
   user.passwordConfirm = req.body.passwordConfirm;
   await user.save();
 
-  // 4) Log user in, send JWT
+  // 4) Send JWT to client
   createSendToken(user, 200, res);
 });
