@@ -15,12 +15,12 @@ exports.getAllUsers = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updateMe = catchAsync(async (req, res, next) => {
+exports.updateUser = catchAsync(async (req, res, next) => {
   // 1) Create error if user POSTs password data
   if (req.body.password || req.body.passwordConfirm) {
     return next(
       new AppError(
-        'This route is not for password updates. Please use /updateMyPassword.',
+        'This route is not for password updates. Please use /users/updatePassword.',
         400
       )
     );

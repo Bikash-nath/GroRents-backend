@@ -6,15 +6,17 @@ const bcrypt = require('bcryptjs');
 const addressSchema = new mongoose.Schema({
   houseNo: String,
   street: String,
-  city: String,
+  area: String, //P.O.
   pincode: {
     type: Number,
     maxlength: 6,
   },
+  city: String,
+  district: String,
   state: {
     type: String,
     maxlength: 20,
-    enum: ['Assam', 'Tripura', 'West Bengal'],
+    enum: ['Arunachal Pradesh', 'Assam', 'Manipur', 'Mizoram', 'Nagaland', 'Sikkim', 'Tripura', 'West Bengal'],
   },
   country: {
     type: String,
@@ -22,6 +24,5 @@ const addressSchema = new mongoose.Schema({
   },
 });
 
-const Address = mongoose.model('address', addressSchema);
-
+const Address = mongoose.model('Address', addressSchema);
 module.exports = Address;

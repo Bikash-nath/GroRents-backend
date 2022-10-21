@@ -6,12 +6,12 @@ const router = express.Router();
 router
   .route('/')
   .get(houseController.getAllHouses)
-  .post(houseController.createHouse);
+  .post(authController.protect, houseController.createHouses);
 
 router
   .route('/:id')
-  .get(houseController.getHouse)
-  .patch(houseController.updateHouse)
-  .delete(houseController.deleteHouse);
+  .get(authController.protect, houseController.getHouse)
+  .patch(authController.protect, houseController.updateHouse)
+  .delete(authController.protect, houseController.deleteHouse);
 
 module.exports = router;

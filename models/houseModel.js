@@ -7,8 +7,8 @@ const houseSchema = new mongoose.Schema({
     trim: true,
     unique: true,
     required: [true, 'A house must have a title'],
-    maxlength: [80, 'A house title must have less or equal then 80 characters'],
-    minlength: [10, 'A house title must have more or equal then 10 characters'],
+    maxlength: [80, 'A house title must have atmost 80 characters'],
+    minlength: [10, 'A house title must have atleast 10 characters'],
   },
   slug: String,
   carpetArea: {
@@ -44,8 +44,17 @@ const houseSchema = new mongoose.Schema({
     default: false,
   },
   address: {
-    type: String,
-    trim: true,
+        type: mongoose.Schema.ObjectId,
+        ref: 'Address'
+  },
+  location: {
+    // GeoJSON
+    type: {
+      type: String,
+      default: 'Point',
+      enum: ['Point']
+    },
+    coordinates: [Number],
   },
   availability: {
     type: Date,
@@ -156,8 +165,24 @@ const houseSchema = new mongoose.Schema({
     trim: true,
   },
   nearbyPlaces: [String],
+  owner:     {
+      type: mongoose.Schema.ObjectId,
+      ref: 'User'
+    }
+  // {
+  //   toJSON: { virtuals: true },
+  //   toObject: { virtuals: true }
+  // }
 });
 
-const House = mongoose.model('houses', houseSchema);
-
+const House = mongoose.model('House', houseSchema);
 module.exports = House;
+
+houseSchema.pre(/^find/, function(next) {
+  this.populate({
+    path: 'owner',
+    select: '-__v -passwordChangedAt'
+  });
+
+  next();
+});
