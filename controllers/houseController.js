@@ -4,9 +4,7 @@ const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
 
 exports.getAllHouses = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(House.find(), req.query)
-    .sort()
-    .limitFields();
+  const features = new APIFeatures(House.find(), req.query).sort().limitFields();
   const houses = await features.query;
 
   // Send Response
@@ -43,8 +41,7 @@ exports.createHouse = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updateHouse = catchAsync(async (req, res, next) => {
-  const house = await House.findByIdAndUpdate(req.params.id, req.body, {
+exports.updateHouse = catchAsync(async (req, res, next) => {const house = await House.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
   });
