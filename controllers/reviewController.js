@@ -1,15 +1,19 @@
 const Review = require('./../models/reviewModel');
 // const catchAsync = require('./../utils/catchAsync');
 
+// Nested review routes
 exports.setReviewUserIds = (req, res, next) => {
-  // Allow nested routes
+  //set review id from query if not specified in body
   if (!req.body.review) req.body.review = req.params.reviewId;
-  if (!req.body.user) req.body.user = req.user.id;
+  if (!req.body.user) req.body.user = req.user.id; //from Protect middleware
   next();
 };
 
 exports.getAllReviews = catchAsync(async (req, res, next) => {
-  const reviews = await Review.find();
+  let filter = {};
+  if (req.params.houseId) filter = { house: req.params.houseId }; //get reviews based on houseId
+
+  const reviews = await Review.find(filter);
 
   // SEND RESPONSE
   res.status(200).json({

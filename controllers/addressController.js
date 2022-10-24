@@ -1,15 +1,19 @@
 const Address = require('./../models/addressModel');
 const catchAsync = require('./../utils/catchAsync');
 
+// Nested address routes
 exports.setAddressUserIds = (req, res, next) => {
-  // Allow nested routes
+  //set address id from query if not specified in body
   if (!req.body.address) req.body.address = req.params.addressId;
-  if (!req.body.user) req.body.user = req.user.id;
+  if (!req.body.user) req.body.user = req.user.id; //from Protect middleware
   next();
 };
 
 exports.getAllAddresss = catchAsync(async (req, res, next) => {
-  const addresss = await Address.find();
+  let filter = { user: req.body.user };
+  // if (req.params.userId) filter = { user: req.params.userId }; //get address based on userId
+
+  const addresss = await Address.find(filter);
 
   // SEND RESPONSE
   res.status(200).json({

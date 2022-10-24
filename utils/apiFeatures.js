@@ -14,6 +14,15 @@ class APIFeatures {
     return this;
   }
 
+  filter() {
+    const queryObj = { ...this.queryString };
+    const excludedFields = ['page', 'sort', 'limit', 'fields'];
+    excludedFields.forEach((el) => delete queryObj[el]);
+
+    this.query = this.query.find(JSON.parse(queryStr));
+    return this;
+  }
+
   limitFields() {
     const fields =
       'title carpetArea maxTenants availableFor price deposit verified furnishing availability address imageCover bedroomsCount bathroomsCount';

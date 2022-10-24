@@ -29,18 +29,15 @@ const userSchema = new mongoose.Schema({
     type: Date,
     validate: {
       validator: (date) => {
-        return (
-          date <=
-          new Date(new Date().setFullYear(new Date().getFullYear() - 10))
-        );
+        return date <= new Date(new Date().setFullYear(new Date().getFullYear() - 10));
       },
       message: 'Your Age should be greater than 10 years',
     },
   },
   address: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Address'
-},
+    ref: 'Address',
+  },
   occupation: String,
   role: {
     type: String,
@@ -74,7 +71,22 @@ const userSchema = new mongoose.Schema({
   },
 });
 
+// Virtual populate - parent to child reference
+userSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'user', //in Review modal
+  localField: '_id',
+});
+
 // QUERY MIDDLEWARE
+reviewSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: 'address',
+    select: 'city state',
+  });
+  next();
+});
+
 userSchema.pre('save', async function (next) {
   // Only run this function if password was actually modified
   if (!this.isModified('password')) return next();
@@ -94,19 +106,13 @@ userSchema.pre('save', function (next) {
   next();
 });
 
-userSchema.methods.correctPassword = async (
-  candidatePassword,
-  userPassword
-) => {
+userSchema.methods.correctPassword = async (candidatePassword, userPassword) => {
   return await bcrypt.compare(candidatePassword, userPassword);
 };
 
 userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
   if (this.passwordChangedAt) {
-    const changedTimestamp = parseInt(
-      this.passwordChangedAt.getTime() / 1000,
-      10
-    );
+    const changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10);
     // True if password was changed after JWT was issued
     return JWTTimestamp < changedTimestamp;
   }
@@ -117,10 +123,7 @@ userSchema.methods.createPasswordResetToken = function () {
   const resetToken = crypto.randomBytes(32).toString('hex');
 
   //Encrypted version of resetToken (save in DB)
-  this.passwordResetToken = crypto
-    .createHash('sha256')
-    .update(resetToken)
-    .digest('hex');
+  this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
   // console.log({ resetToken }, this.passwordResetToken);
   return resetToken;

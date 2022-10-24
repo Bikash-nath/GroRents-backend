@@ -2,6 +2,9 @@ const express = require('express');
 const router = express.Router();
 const userController = require('./../controllers/userController');
 const authController = require('./../controllers/authController');
+const addressRouter = require('./../routes/addressRoutes');
+
+router.use('/:userId/address', addressRouter); // allow Nested address routes
 
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);

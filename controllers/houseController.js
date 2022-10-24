@@ -18,7 +18,7 @@ exports.getAllHouses = catchAsync(async (req, res, next) => {
 });
 
 exports.getHouse = catchAsync(async (req, res, next) => {
-  const house = await House.findById(req.params.id);
+  const house = await House.findById(req.params.id).populate('reviews');
 
   if (!house) return next(new AppError('No house found with this ID', 404));
 
@@ -41,7 +41,8 @@ exports.createHouse = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updateHouse = catchAsync(async (req, res, next) => {const house = await House.findByIdAndUpdate(req.params.id, req.body, {
+exports.updateHouse = catchAsync(async (req, res, next) => {
+  const house = await House.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
   });
