@@ -10,6 +10,11 @@ const houseSchema = new mongoose.Schema({
     maxlength: [80, 'A house title must have atmost 80 characters'],
     minlength: [10, 'A house title must have atleast 10 characters'],
   },
+  houseNo: {
+    type: String,
+    trim: true,
+    unique: true,
+  },
   slug: String,
   carpetArea: {
     type: Number, //In sq. feet
@@ -181,7 +186,7 @@ module.exports = House;
 houseSchema.pre(/^find/, function(next) {
   this.populate({
     path: 'owner',
-    select: '-__v -passwordChangedAt'
+    select: '-__v -passwordChangedAt -houseNo'
   });
 
   next();
