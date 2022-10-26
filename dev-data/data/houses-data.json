@@ -1,6 +1,8 @@
 [
   {
+    "_id": "5c88fa8cf4afda39709c2955",
     "title": "2 BHK House for rent in Lakeview Apartments, Krishnanagar, Agartala",
+    "houseNos": ["21A", "23B", "26A"],
     "carpetArea": 1200,
     "propertyType": "Flat",
     "availableFor": "Family",
@@ -57,7 +59,9 @@
     "nearbyPlaces": ["Dimsagar Lake Park", "Xpressbees Courier Service"]
   },
   {
+    "_id": "5c88fa8cf4afda39709c2951",
     "title": "1 BHK Independent Builder Floor for rent in Indranagar, Agartala",
+    "houseNos": ["111C", "112A", "115B"],
     "carpetArea": 500,
     "propertyType": "Apartment",
     "availableFor": "All",
@@ -93,12 +97,7 @@
       "Exhaust Fan",
       "Gas Pipeline"
     ],
-    "societyAmenity": [
-      "Power Backup",
-      "Water Supply: 24Hr Borewell",
-      "Gated Security",
-      "Terrace"
-    ],
+    "societyAmenity": ["Power Backup", "Water Supply: 24Hr Borewell", "Gated Security", "Terrace"],
     "nonVeg": true,
     "pets": false,
     "smoking": true,
@@ -111,7 +110,9 @@
     "nearbyPlaces": ["Volcan Club", "Central Jail"]
   },
   {
+    "_id": "5c88fa8cf4afda39709c295a",
     "title": "1 BHK Independent Villa for Rent in Dhaleswar, Agartala",
+    "houseNos": ["477A", "477C", "480B"],
     "carpetArea": 550,
     "propertyType": "Apartment",
     "availableFor": "Bachelors",
@@ -138,13 +139,7 @@
     "bathroomsCount": 1,
     "balconyCount": 1,
     "additionalRooms": [],
-    "houseAmenity": [
-      "2 Fan",
-      "3 Lights",
-      "1 Cupboard",
-      "Chimney",
-      "Gas Pipeline"
-    ],
+    "houseAmenity": ["2 Fan", "3 Lights", "1 Cupboard", "Chimney", "Gas Pipeline"],
     "societyAmenity": [
       "Power Backup",
       "Water Supply: 24Hr Borewell",

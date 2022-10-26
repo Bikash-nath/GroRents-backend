@@ -1,0 +1,74 @@
+[
+  {
+    "_id": "5c8a1d5b0190b214360dc057",
+    "name": "Bikash Nath",
+    "email": "bikashnath@grorents.com",
+    "role": "admin",
+    "active": true,
+    "photo": "admin-1.jpg",
+    "password": "admin121"
+  },
+  {
+    "_id": "5c8a1dfa2f8fb814b56fa181",
+    "name": "Admin",
+    "email": "admin@grorents.com",
+    "role": "admin",
+    "active": true,
+    "photo": "admin-2.jpg",
+    "password": "admin122"
+  },
+  {
+    "_id": "5c8a1e1a2f8fb814b56fa182",
+    "name": "Prem Sarkar",
+    "email": "@grorents.com",
+    "role": "owner",
+    "active": true,
+    "photo": "owner-1.jpg",
+    "password": "owner121"
+  },
+  {
+    "_id": "5c8a1ec62f8fb814b56fa183",
+    "name": "Deepak Sinha",
+    "email": "deepaksinha@grorents.com",
+    "role": "owner",
+    "active": true,
+    "photo": "owner-2.jpg",
+    "password": "owner122"
+  },
+  {
+    "_id": "5c8a1f292f8fb814b56fa184",
+    "name": "Soumya Das",
+    "email": "soumyadas@gmail.com",
+    "role": "user",
+    "active": true,
+    "photo": "user-1.jpg",
+    "password": "user121"
+  },
+  {
+    "_id": "5c8a1f4e2f8fb814b56fa185",
+    "name": "Shiv Kumar",
+    "email": "shivkumar@gmail.com",
+    "role": "user",
+    "active": true,
+    "photo": "user-2.jpg",
+    "password": "user122"
+  },
+  {
+    "_id": "5c8a201e2f8fb814b56fa186",
+    "name": "Deepali Das",
+    "email": "eliana@example.com",
+    "role": "user",
+    "active": true,
+    "photo": "user-3.jpg",
+    "password": "user123"
+  },
+  {
+    "_id": "5c8a20d32f8fb814b56fa187",
+    "name": "Arjun Kapoor",
+    "email": "arjunkapoor@gmail.com",
+    "role": "user",
+    "active": true,
+    "photo": "user-4.jpg",
+    "password": "user124"
+  }
+]

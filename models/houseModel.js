@@ -11,7 +11,7 @@ const houseSchema = new mongoose.Schema(
       maxlength: [80, 'A house title must have atmost 80 characters'],
       minlength: [10, 'A house title must have atleast 10 characters'],
     },
-    houseNo: [
+    houseNos: [
       {
         type: String,
         trim: true,
@@ -125,17 +125,6 @@ const houseSchema = new mongoose.Schema(
         ],
       },
     },
-    ratingsAverage: {
-      type: Number,
-      default: 4.5,
-      min: [1, 'Rating must be above 1.0'],
-      max: [5, 'Rating must be below 5.0'],
-      set: (val) => Math.round(val * 10) / 10, // 4.666666, 46.6666, 47, 4.7
-    },
-    ratingsQuantity: {
-      type: Number,
-      default: 0,
-    },
     imageCover: {
       type: String,
       required: [true, 'A house must have a cover image'],
@@ -199,6 +188,17 @@ const houseSchema = new mongoose.Schema(
       trim: true,
     },
     nearbyPlaces: [String],
+    ratingsAverage: {
+      type: Number,
+      default: 0,
+      min: [1, 'Rating must be above 1.0'],
+      max: [5, 'Rating must be below 5.0'],
+      set: (val) => Math.round(val * 10) / 10, // 4.666666, 46.6666, 47, 4.7
+    },
+    ratingsQuantity: {
+      type: Number,
+      default: 0,
+    },
     owner: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
