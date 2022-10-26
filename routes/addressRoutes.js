@@ -9,7 +9,7 @@ router.use(authController.protect);
 router
   .route('/')
   .get(addressController.getAllAddresss)
-  .post(addressController.setTourUserIds, addressController.createAddress);
+  .post(addressController.setAddressUserIds, addressController.createAddress);
 
 router
   .route('/:id')

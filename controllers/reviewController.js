@@ -1,5 +1,5 @@
 const Review = require('./../models/reviewModel');
-// const catchAsync = require('./../utils/catchAsync');
+const catchAsync = require('./../utils/catchAsync');
 
 // Nested review routes
 exports.setReviewUserIds = (req, res, next) => {

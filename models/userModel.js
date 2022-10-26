@@ -79,7 +79,7 @@ userSchema.virtual('reviews', {
 });
 
 // QUERY MIDDLEWARE
-reviewSchema.pre(/^find/, function (next) {
+userSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'address',
     select: 'city state',

@@ -17,7 +17,7 @@ const houseSchema = new mongoose.Schema(
         trim: true,
       },
     ],
-    slug: { String, unique: true },
+    slug: { type: String, unique: true },
     carpetArea: {
       type: Number, //In sq. feet
       required: [true, 'A house must have carpet/plot area'],
@@ -48,6 +48,15 @@ const houseSchema = new mongoose.Schema(
     price: {
       type: Number,
       required: [true, 'A house must have a Rental Price'],
+    },
+    priceDiscount: {
+      type: Number,
+      validate: {
+        validator: function (val) {
+          return val < this.price;
+        },
+        message: 'Discount price ({VALUE}) should be below regular price',
+      },
     },
     deposit: {
       type: Number,
@@ -115,6 +124,17 @@ const houseSchema = new mongoose.Schema(
           'North-West',
         ],
       },
+    },
+    ratingsAverage: {
+      type: Number,
+      default: 4.5,
+      min: [1, 'Rating must be above 1.0'],
+      max: [5, 'Rating must be below 5.0'],
+      set: (val) => Math.round(val * 10) / 10, // 4.666666, 46.6666, 47, 4.7
+    },
+    ratingsQuantity: {
+      type: Number,
+      default: 0,
     },
     imageCover: {
       type: String,
@@ -204,7 +224,7 @@ houseSchema.pre('save', function (next) {
 });
 
 // 3.QUERY MIDDLEWARE
-reviewSchema.pre(/^find/, function (next) {
+houseSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'address',
     select: 'street area city',
