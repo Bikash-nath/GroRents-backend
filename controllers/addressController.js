@@ -9,69 +9,73 @@ exports.setAddressUserIds = (req, res, next) => {
   next();
 };
 
-exports.getAllAddresss = catchAsync(async (req, res, next) => {
-  let filter = { user: req.body.user };
-  // if (req.params.userId) filter = { user: req.params.userId }; //get address based on userId
+exports.getAllAddresss = factory.getAll(Address, { user: req.body.user });
+exports.getAddress = factory.getOne(Address, { path: 'reviews' });
+exports.createAddress = factory.createOne(Address);
+exports.updateAddress = factory.updateOne(Address);
+exports.deleteAddress = factory.deleteOne(Address);
 
-  const addresss = await Address.find(filter);
+// exports.getAllAddresss = catchAsync(async (req, res, next) => {
 
-  // SEND RESPONSE
-  res.status(200).json({
-    status: 'success',
-    results: addresss.length,
-    data: {
-      addresss,
-    },
-  });
-});
+//   const addresss = await Address.find(filter);
 
-exports.getAddress = catchAsync(async (req, res, next) => {
-  const address = await Address.findById(req.params.id);
+//   // SEND RESPONSE
+//   res.status(200).json({
+//     status: 'success',
+//     results: addresss.length,
+//     data: {
+//       addresss,
+//     },
+//   });
+// });
 
-  if (!address) return next(new AppError('No address found with this ID', 404));
+// exports.getAddress = catchAsync(async (req, res, next) => {
+//   const address = await Address.findById(req.params.id);
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      address,
-    },
-  });
-});
+//   if (!address) return next(new AppError('No address found with this ID', 404));
 
-exports.createAddress = catchAsync(async (req, res, next) => {
-  const newAddress = await Address.create(req.body);
+//   res.status(200).json({
+//     status: 'success',
+//     data: {
+//       address,
+//     },
+//   });
+// });
 
-  res.status(201).json({
-    status: 'success',
-    data: {
-      address: newAddress,
-    },
-  });
-});
+// exports.createAddress = catchAsync(async (req, res, next) => {
+//   const newAddress = await Address.create(req.body);
 
-exports.updateAddress = catchAsync(async (req, res, next) => {
-  const address = await Address.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+//   res.status(201).json({
+//     status: 'success',
+//     data: {
+//       address: newAddress,
+//     },
+//   });
+// });
 
-  if (!address) return next(new AppError('No address found with this ID', 404));
+// exports.updateAddress = catchAsync(async (req, res, next) => {
+//   const address = await Address.findByIdAndUpdate(req.params.id, req.body, {
+//     new: true,
+//     runValidators: true,
+//   });
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      address,
-    },
-  });
-});
+//   if (!address) return next(new AppError('No address found with this ID', 404));
 
-exports.deleteAddress = catchAsync(async (req, res, next) => {
-  const address = await Address.findByIdAndDelete(req.params.id);
+//   res.status(200).json({
+//     status: 'success',
+//     data: {
+//       address,
+//     },
+//   });
+// });
 
-  if (!address) return next(new AppError('No address found with this ID', 404));
+// exports.deleteAddress = catchAsync(async (req, res, next) => {
+//   const address = await Address.findByIdAndDelete(req.params.id);
 
-  res.status(204).json({
-    status: 'success',
-    data: null,
-  });
-});
+//   if (!address) return next(new AppError('No address found with this ID', 404));
+
+//   res.status(204).json({
+//     status: 'success',
+//     data: null,
+//   });
+// });

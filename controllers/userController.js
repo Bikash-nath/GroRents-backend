@@ -1,6 +1,7 @@
 const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
+const factory = require('./handlerFactory');
 
 exports.getUser = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.params.id);
@@ -23,20 +24,11 @@ exports.getUser = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.getMe = catchAsync(async (req, res, next) => {
-  const user = await User.findById(req.params.id);
-
-  if (!user) {
-    return next(new AppError('No user found with that ID', 404));
-  }
-
-  res.status(200).json({
-    status: 'success',
-    data: {
-      data: user,
-    },
-  });
-});
+exports.getMe = (req, res, next) => {
+  req.params.id = req.user.id;
+  factory.getOne(User);
+  next();
+};
 
 exports.updateMe = catchAsync(async (req, res, next) => {
   // 1) Create error if user POSTs password data

@@ -1,77 +1,84 @@
 const Review = require('./../models/reviewModel');
 const catchAsync = require('./../utils/catchAsync');
+const factory = require('./handlerFactory');
 
 // Nested review routes
-exports.setReviewUserIds = (req, res, next) => {
+exports.setHouseUserIds = (req, res, next) => {
   //set review id from query if not specified in body
-  if (!req.body.review) req.body.review = req.params.reviewId;
+  if (!req.body.house) req.body.house = req.params.houseId;
   if (!req.body.user) req.body.user = req.user.id; //from Protect middleware
   next();
 };
 
-exports.getAllReviews = catchAsync(async (req, res, next) => {
-  let filter = {};
-  if (req.params.houseId) filter = { house: req.params.houseId }; //get reviews based on houseId
+exports.getAllReviews = factory.getAll(Review, { user: req.body.user });
+exports.getReview = factory.getOne(Review, { path: 'reviews' });
+exports.createReview = factory.createOne(Review);
+exports.updateReview = factory.updateOne(Review);
+exports.deleteReview = factory.deleteOne(Review);
 
-  const reviews = await Review.find(filter);
+// exports.getAllReviews = catchAsync(async (req, res, next) => {
+//   let filter = {};
+//   if (req.params.houseId) filter = { house: req.params.houseId }; //get reviews based on houseId
 
-  // SEND RESPONSE
-  res.status(200).json({
-    status: 'success',
-    results: reviews.length,
-    data: {
-      reviews,
-    },
-  });
-});
+//   const reviews = await Review.find(filter);
 
-exports.getReview = catchAsync(async (req, res, next) => {
-  const review = await Review.findById(req.params.id);
+//   // SEND RESPONSE
+//   res.status(200).json({
+//     status: 'success',
+//     results: reviews.length,
+//     data: {
+//       reviews,
+//     },
+//   });
+// });
 
-  if (!review) return next(new AppError('No review found with this ID', 404));
+// exports.getReview = catchAsync(async (req, res, next) => {
+//   const review = await Review.findById(req.params.id);
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      review,
-    },
-  });
-});
+//   if (!review) return next(new AppError('No review found with this ID', 404));
 
-exports.createReview = catchAsync(async (req, res, next) => {
-  const newReview = await Review.create(req.body);
+//   res.status(200).json({
+//     status: 'success',
+//     data: {
+//       review,
+//     },
+//   });
+// });
 
-  res.status(201).json({
-    status: 'success',
-    data: {
-      review: newReview,
-    },
-  });
-});
+// exports.createReview = catchAsync(async (req, res, next) => {
+//   const newReview = await Review.create(req.body);
 
-exports.updateReview = catchAsync(async (req, res, next) => {
-  const review = await Review.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+//   res.status(201).json({
+//     status: 'success',
+//     data: {
+//       review: newReview,
+//     },
+//   });
+// });
 
-  if (!review) return next(new AppError('No review found with this ID', 404));
+// exports.updateReview = catchAsync(async (req, res, next) => {
+//   const review = await Review.findByIdAndUpdate(req.params.id, req.body, {
+//     new: true,
+//     runValidators: true,
+//   });
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      review,
-    },
-  });
-});
+//   if (!review) return next(new AppError('No review found with this ID', 404));
 
-exports.deleteReview = catchAsync(async (req, res, next) => {
-  const review = await Review.findByIdAndDelete(req.params.id);
+//   res.status(200).json({
+//     status: 'success',
+//     data: {
+//       review,
+//     },
+//   });
+// });
 
-  if (!review) return next(new AppError('No review found with this ID', 404));
+// exports.deleteReview = catchAsync(async (req, res, next) => {
+//   const review = await Review.findByIdAndDelete(req.params.id);
 
-  res.status(204).json({
-    status: 'success',
-    data: null,
-  });
-});
+//   if (!review) return next(new AppError('No review found with this ID', 404));
+
+//   res.status(204).json({
+//     status: 'success',
+//     data: null,
+//   });
+// });

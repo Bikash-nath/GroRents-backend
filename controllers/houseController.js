@@ -1,69 +1,73 @@
 const House = require('./../models/houseModel');
-const APIFeatures = require('./../utils/apiFeatures');
-const catchAsync = require('./../utils/catchAsync');
-const AppError = require('./../utils/appError');
+const factory = require('./handlerFactory');
 
-exports.getAllHouses = catchAsync(async (req, res, next) => {
-  const features = new APIFeatures(House.find(), req.query).sort().limitFields();
-  const houses = await features.query;
+exports.getAllHouses = factory.getAll(House);
+exports.getHouse = factory.getOne(House, { path: 'reviews' });
+exports.createHouse = factory.createOne(House);
+exports.updateHouse = factory.updateOne(House);
+exports.deleteHouse = factory.deleteOne(House);
 
-  // Send Response
-  res.status(200).json({
-    status: 'success',
-    results: houses.length,
-    data: {
-      houses,
-    },
-  });
-});
+// exports.getAllHouses = catchAsync(async (req, res, next) => {
+//   const features = new APIFeatures(House.find(), req.query).sort().limitFields();
+//   const houses = await features.query;
 
-exports.getHouse = catchAsync(async (req, res, next) => {
-  const house = await House.findById(req.params.id).populate('reviews');
+//   // Send Response
+//   res.status(200).json({
+//     status: 'success',
+//     results: houses.length,
+//     data: {
+//       houses,
+//     },
+//   });
+// });
 
-  if (!house) return next(new AppError('No house found with this ID', 404));
+// exports.getHouse = catchAsync(async (req, res, next) => {
+//   const house = await House.findById(req.params.id).populate('reviews');
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      house,
-    },
-  });
-});
+//   if (!house) return next(new AppError('No house found with this ID', 404));
 
-exports.createHouse = catchAsync(async (req, res, next) => {
-  const newHouse = await House.create(req.body);
+//   res.status(200).json({
+//     status: 'success',
+//     data: {
+//       house,
+//     },
+//   });
+// });
 
-  res.status(201).json({
-    status: 'success',
-    data: {
-      house: newHouse,
-    },
-  });
-});
+// exports.createHouse = catchAsync(async (req, res, next) => {
+//   const newHouse = await House.create(req.body);
 
-exports.updateHouse = catchAsync(async (req, res, next) => {
-  const house = await House.findByIdAndUpdate(req.params.id, req.body, {
-    new: true,
-    runValidators: true,
-  });
+//   res.status(201).json({
+//     status: 'success',
+//     data: {
+//       house: newHouse,
+//     },
+//   });
+// });
 
-  if (!house) return next(new AppError('No house found with this ID', 404));
+// exports.updateHouse = catchAsync(async (req, res, next) => {
+//   const house = await House.findByIdAndUpdate(req.params.id, req.body, {
+//     new: true,
+//     runValidators: true,
+//   });
 
-  res.status(200).json({
-    status: 'success',
-    data: {
-      house,
-    },
-  });
-});
+//   if (!house) return next(new AppError('No house found with this ID', 404));
 
-exports.deleteHouse = catchAsync(async (req, res, next) => {
-  const house = await House.findByIdAndDelete(req.params.id);
+//   res.status(200).json({
+//     status: 'success',
+//     data: {
+//       house,
+//     },
+//   });
+// });
 
-  if (!house) return next(new AppError('No house found with this ID', 404));
+// exports.deleteHouse = catchAsync(async (req, res, next) => {
+//   const house = await House.findByIdAndDelete(req.params.id);
 
-  res.status(204).json({
-    status: 'success',
-    data: null,
-  });
-});
+//   if (!house) return next(new AppError('No house found with this ID', 404));
+
+//   res.status(204).json({
+//     status: 'success',
+//     data: null,
+//   });
+// });

@@ -8,7 +8,7 @@ router.use(authController.protect);
 
 router
   .route('/')
-  .get(addressController.getAllAddresss)
+  .get(addressController.setAddressUserIds, addressController.getAllAddresss)
   .post(addressController.setAddressUserIds, addressController.createAddress);
 
 router

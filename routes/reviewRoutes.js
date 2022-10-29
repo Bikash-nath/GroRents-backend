@@ -8,10 +8,10 @@ router.use(authController.protect);
 
 router
   .route('/')
-  .get(reviewController.getAllReviews)
+  .get(reviewController.setHouseUserIds, reviewController.getAllReviews)
   .post(
     authController.restrictTo('user'),
-    reviewController.setReviewUserIds,
+    reviewController.setHouseUserIds,
     reviewController.createReview
   );
 
