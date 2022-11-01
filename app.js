@@ -7,6 +7,7 @@ const globalErrorHandler = require('./controllers/errorController');
 const houseRouter = require('./routes/houseRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 
@@ -17,6 +18,7 @@ if (process.env.NODE_ENV === 'development') {
 
 app.use(compression());
 app.use(express.json());
+app.use(cookieParser());
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();

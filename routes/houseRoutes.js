@@ -10,11 +10,7 @@ router.use('/:houseId/reviews', reviewRouter); // allow Nested review routes
 router
   .route('/')
   .get(houseController.getAllHouses)
-  .post(
-    authController.protect,
-    authController.restrictTo('owner', 'admin'),
-    houseController.createHouse
-  );
+  .post(authController.protect, authController.restrictTo('owner'), houseController.createHouse);
 
 router
   .route('/:id')

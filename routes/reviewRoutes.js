@@ -15,6 +15,8 @@ router
     reviewController.createReview
   );
 
+// router.use(reviewController.verifyUser('user', 'admin'));
+
 router
   .route('/:id')
   .get(reviewController.getReview)
