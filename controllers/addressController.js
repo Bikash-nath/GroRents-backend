@@ -1,5 +1,5 @@
-const Address = require('./../models/addressModel');
-const catchAsync = require('./../utils/catchAsync');
+const Address = require('..//models/addressModel');
+const catchAsync = require('..//utils/catchAsync');
 
 // Nested address routes
 exports.setAddressUserIds = (req, res, next) => {

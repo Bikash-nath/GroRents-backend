@@ -1,6 +1,6 @@
-const Review = require('./../models/reviewModel');
+const Review = require('..//models/reviewModel');
 const factory = require('./handlerFactory');
-const catchAsync = require('./../utils/catchAsync');
+const catchAsync = require('..//utils/catchAsync');
 
 // exports.verifyUser = (req, res, next) => {
 //   const review = Review.findById(req.user.id);
