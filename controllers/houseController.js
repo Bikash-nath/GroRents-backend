@@ -1,4 +1,4 @@
-const House = require('..//models/houseModel');
+const House = require('../models/houseModel');
 const factory = require('./handlerFactory');
 
 exports.setHouseFilter = (req, res, next) => {
