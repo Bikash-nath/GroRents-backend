@@ -18,7 +18,7 @@ exports.setHouseUserIds = (req, res, next) => {
   next();
 };
 
-exports.getAllReviews = factory.getAll(Review, { user: req.body.user });
+exports.getAllReviews = factory.getAll(Review);
 exports.getReview = factory.getOne(Review, { path: 'reviews' });
 exports.createReview = factory.createOne(Review);
 exports.updateReview = factory.updateOne(Review);

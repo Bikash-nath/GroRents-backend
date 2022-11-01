@@ -1,4 +1,5 @@
 const Address = require('../models/addressModel');
+const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 
 // Nested address routes
@@ -9,7 +10,7 @@ exports.setAddressUserIds = (req, res, next) => {
   next();
 };
 
-exports.getAllAddresss = factory.getAll(Address, { user: req.body.user });
+exports.getAllAddresss = factory.getAll(Address);
 exports.getAddress = factory.getOne(Address, { path: 'reviews' });
 exports.createAddress = factory.createOne(Address);
 exports.updateAddress = factory.updateOne(Address);
