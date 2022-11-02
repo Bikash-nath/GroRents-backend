@@ -64,11 +64,18 @@ const userSchema = new mongoose.Schema({
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
-  active: {
-    type: Boolean,
-    default: true,
-    select: false,
-  },
+  devices: [
+    {
+      name: String,
+      ipAddress: String,
+      lastLoggedIn: Date,
+      active: {
+        type: Boolean,
+        default: true,
+      },
+      select: false,
+    },
+  ],
 });
 
 // Virtual populate - parent to child reference

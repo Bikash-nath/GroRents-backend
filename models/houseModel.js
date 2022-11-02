@@ -14,7 +14,8 @@ const houseSchema = new mongoose.Schema(
     houseNos: [
       {
         type: String,
-        trim: true,
+        booked: false,
+        select: false,
       },
     ],
     slug: { type: String, unique: true },
@@ -193,7 +194,7 @@ const houseSchema = new mongoose.Schema(
       default: 0,
       min: [1, 'Rating must be above 1.0'],
       max: [5, 'Rating must be below 5.0'],
-      set: (val) => Math.round(val * 10) / 10, // 4.666666, 46.6666, 47, 4.7
+      set: (val) => Math.round(val * 10) / 10,
     },
     ratingsQuantity: {
       type: Number,
@@ -203,6 +204,12 @@ const houseSchema = new mongoose.Schema(
       type: mongoose.Schema.ObjectId,
       ref: 'User',
     },
+    guides: [
+      {
+        type: mongoose.Schema.ObjectId,
+        ref: 'User',
+      },
+    ],
   },
   {
     toJSON: { virtuals: true },
@@ -219,7 +226,8 @@ houseSchema.virtual('reviews', {
 
 // 2.DOCUMENT MIDDLEWARE: runs before .save() and .create()
 houseSchema.pre('save', function (next) {
-  this.slug = slugify(this.title + '-' + this.houseNo, { lower: true });
+  const houseNo = this.houseNos.find((house) => house.booked === false);
+  this.slug = slugify(this.title + '-' + houseNo, { lower: true });
   next();
 });
 

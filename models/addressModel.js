@@ -16,7 +16,16 @@ const addressSchema = new mongoose.Schema({
   state: {
     type: String,
     maxlength: 20,
-    enum: ['Arunachal Pradesh', 'Assam', 'Manipur', 'Mizoram', 'Nagaland', 'Sikkim', 'Tripura', 'West Bengal'],
+    enum: [
+      'Arunachal Pradesh',
+      'Assam',
+      'Manipur',
+      'Mizoram',
+      'Nagaland',
+      'Sikkim',
+      'Tripura',
+      'West Bengal',
+    ],
   },
   country: {
     type: String,
