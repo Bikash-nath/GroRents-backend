@@ -1,9 +1,11 @@
 const express = require('express');
-const router = express.Router();
+const multer = require('multer');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const addressRouter = require('../routes/addressRoutes');
 
+const router = express.Router();
+const upload = multer({ dest: '../uploads/img/users' });
 router.use('/:userId/address', addressRouter); // allow Nested address routes
 
 router.post('/signup', authController.signup);
@@ -17,7 +19,7 @@ router.use(authController.protect);
 router.patch('/updatePassword', authController.updatePassword);
 
 router.route('/me').get(userController.getMe);
-router.patch('/updateMe', userController.updateMe);
+router.patch('/updateMe', upload.single('user-photo'), userController.updateMe);
 router.delete('/deleteMe', userController.deleteMe);
 
 router.route('/:id').get(userController.getUser);
