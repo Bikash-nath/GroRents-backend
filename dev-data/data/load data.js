@@ -1,9 +1,9 @@
 const fs = require('fs');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const House = require('./../../models/houseModel');
-const Review = require('./../../models/reviewModel');
-const User = require('./../../models/userModel');
+const House = require('../../models/houseModel');
+const Review = require('../../models/reviewModel');
+const User = require('../../models/userModel');
 
 dotenv.config({ path: './config.env' });
 
