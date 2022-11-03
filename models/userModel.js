@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
     minlength: [10, 'Please provide a valid 10-digit phone number'],
     maxlength: [10, 'Please provide a valid 10-digit phone number'],
   },
-  photo: String,
+  photo: { type: String, default: 'user-avatar.jpg' },
   gender: {
     type: String,
     enum: ['Male', 'Female', 'Transgender'],
