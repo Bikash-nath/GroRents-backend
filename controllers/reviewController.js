@@ -2,13 +2,18 @@ const Review = require('../models/reviewModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 
-// exports.verifyUser = (req, res, next) => {
-//   const review = Review.findById(req.user.id);
-//   if ((review.user !== req.user.id && req.user.role === 'user') || req.user.role !== 'admin') {
-//     return next(new AppError('You do not have permission to perform this action', 403));
-//   }
-//   next();
-// };
+exports.verifyUser = (...roles) => {
+  return (req, res, next) => {
+    const review = Review.findById(req.user.id);
+    if (roles.includes('admin') && req.user.role === 'admin') {
+      next();
+    }
+    if (review.user !== req.user.id || req.user.role !== 'user') {
+      return next(new AppError('You do not have permission to perform this action', 403));
+    }
+    next();
+  };
+};
 
 // Nested review routes
 exports.setHouseUserIds = (req, res, next) => {
@@ -89,4 +94,4 @@ exports.deleteReview = factory.deleteOne(Review);
 //     status: 'success',
 //     data: null,
 //   });
-// });
+// });?
