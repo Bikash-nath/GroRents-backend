@@ -2,6 +2,22 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
 
+exports.authorizeUser = (Model, user, admin) => {
+  return (req, res, next) => {
+    req.query = Model.findOne(req.params.id);
+    if (
+      (admin && req.user.role === 'admin') ||
+      (req.user.role === user && req.method === 'POST')
+    ) {
+      next();
+    }
+    if ((doc.user || doc.owner) !== req.user.id || !user.includes(req.user.role)) {
+      return next(new AppError('You do not have permission to perform this action', 403));
+    }
+    next();
+  };
+};
+
 exports.getOne = (Model, filter, popOptions) =>
   catchAsync(async (req, res, next) => {
     let query = Model.findOne(req.filter);
@@ -22,7 +38,10 @@ exports.getOne = (Model, filter, popOptions) =>
 
 exports.getAll = (Model, filter = {}) =>
   catchAsync(async (req, res, next) => {
-    const features = new APIFeatures(Model.find(filter), req.query).filter().sort().limitFields();
+    const features = new APIFeatures(Model.find(filter), req.query)
+      .filter()
+      .sort()
+      .limitFields();
     const doc = await features.query;
 
     res.status(200).json({

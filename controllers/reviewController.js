@@ -2,17 +2,13 @@ const Review = require('../models/reviewModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 
-exports.verifyUser = (...roles) => {
-  return (req, res, next) => {
-    const review = Review.findById(req.user.id);
-    if (roles.includes('admin') && req.user.role === 'admin') {
-      next();
-    }
-    if (review.user !== req.user.id || req.user.role !== 'user') {
-      return next(new AppError('You do not have permission to perform this action', 403));
-    }
-    next();
-  };
+exports.authorizeUserReviews = (...userRoles) => {
+  return factory.authorizeUser(Review, userRoles);
+};
+
+exports.allReviewsFilter = (req, res, next) => {
+  req.query = { filter: req.body.user };
+  next();
 };
 
 // Nested review routes
@@ -28,6 +24,22 @@ exports.getReview = factory.getOne(Review, { path: 'reviews' });
 exports.createReview = factory.createOne(Review);
 exports.updateReview = factory.updateOne(Review);
 exports.deleteReview = factory.deleteOne(Review);
+
+// exports.verifyUser = (...roles) => {
+//   return (req, res, next) => {
+//     const review = Review.findById(req.params.id);
+//     if (
+//       (roles.includes('admin') && req.user.role === 'admin') ||
+//       (req.user.role === 'user' && req.method === 'POST')
+//     ) {
+//       next();
+//     }
+//     if (review.user !== req.user.id || req.user.role !== 'user') {
+//       return next(new AppError('You do not have permission to perform this action', 403));
+//     }
+//     next();
+//   };
+// };
 
 // exports.getAllReviews = catchAsync(async (req, res, next) => {
 //   let filter = {};
