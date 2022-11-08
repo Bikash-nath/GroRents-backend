@@ -2,8 +2,8 @@ const Review = require('../models/reviewModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 
-exports.authorizeUserReviews = (...userRoles) => {
-  return factory.authorizeUser(Review, userRoles);
+exports.authorizeReviews = (...userRoles) => {
+  return factory.authoriseUser(Review, userRoles);
 };
 
 exports.allReviewsFilter = (req, res, next) => {
@@ -24,6 +24,7 @@ exports.getReview = factory.getOne(Review, { path: 'reviews' });
 exports.createReview = factory.createOne(Review);
 exports.updateReview = factory.updateOne(Review);
 exports.deleteReview = factory.deleteOne(Review);
+// exports.updateReview =[factory.authoriseUser(Review,['user', 'admin']), factory.updateOne];
 
 // exports.verifyUser = (...roles) => {
 //   return (req, res, next) => {

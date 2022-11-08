@@ -2,16 +2,20 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
 
-exports.authorizeUser = (Model, user, admin) => {
+exports.authoriseUser = (Model, userRoles) => {
   return (req, res, next) => {
+    // const users=userRoles.reduce((a, u) => ({ ...a, [u]: u }), {});
     req.query = Model.findOne(req.params.id);
     if (
-      (admin && req.user.role === 'admin') ||
-      (req.user.role === user && req.method === 'POST')
+      (userRoles.includes('admin') && req.user.role === 'admin') ||
+      (['owner', 'user'].includes(req.user.role) && req.method === 'POST')
     ) {
       next();
     }
-    if ((doc.user || doc.owner) !== req.user.id || !user.includes(req.user.role)) {
+    if (
+      (doc.user || doc.owner || doc.guide) !== req.user.id ||
+      !userRoles.includes(req.user.role)
+    ) {
       return next(new AppError('You do not have permission to perform this action', 403));
     }
     next();

@@ -1,6 +1,10 @@
 const House = require('../models/houseModel');
 const factory = require('./handlerFactory');
 
+exports.authoriseHouse = (...userRoles) => {
+  return factory.authoriseUser(House, userRoles);
+};
+
 exports.setHouseFilter = (req, res, next) => {
   req.filter = { _id: req.params.id };
   next();
