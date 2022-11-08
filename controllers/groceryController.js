@@ -1,7 +1,7 @@
 // const Grocery = require('../models/groceryModel');
 const factory = require('./handlerFactory');
 
-exports.authorizeGrocery = (...userRoles) => {
+exports.authoriseGrocery = (...userRoles) => {
   // return factory.authoriseUser(Grocery, userRoles);
 };
 

@@ -12,7 +12,7 @@ router
   .get(groceryController.getAllHouses)
   .post(
     authController.protect,
-    authController.restrictTo('owner'),
+    groceryController.authoriseGrocery('owner'),
     groceryController.createHouse
   );
 
@@ -21,12 +21,12 @@ router
   .get(authController.protect, groceryController.getHouse)
   .patch(
     authController.protect,
-    authController.restrictTo('owner', 'admin'),
+    groceryController.authoriseGrocery('owner', 'admin'),
     groceryController.updateHouse
   )
   .delete(
     authController.protect,
-    authController.restrictTo('owner', 'admin'),
+    groceryController.authoriseGrocery('owner', 'admin'),
     groceryController.deleteHouse
   );
 

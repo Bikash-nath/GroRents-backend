@@ -4,7 +4,7 @@ const APIFeatures = require('../utils/apiFeatures');
 
 exports.authoriseUser = (Model, userRoles) => {
   return (req, res, next) => {
-    // const users=userRoles.reduce((a, u) => ({ ...a, [u]: u }), {});
+    // const users=userRoles.reduce((a, u) => ({ ...a, [u]: u }), {});  //arrat -> object
     req.query = Model.findOne(req.params.id);
     if (
       (userRoles.includes('admin') && req.user.role === 'admin') ||
