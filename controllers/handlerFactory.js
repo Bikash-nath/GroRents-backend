@@ -4,11 +4,11 @@ const APIFeatures = require('../utils/apiFeatures');
 
 exports.authoriseUser = (Model, userRoles) => {
   return (req, res, next) => {
-    // const users=userRoles.reduce((a, u) => ({ ...a, [u]: u }), {});  //arrat -> object
+    // const users=userRoles.reduce((u, r) => ({ ...u, [r]: r }), {});  //array -> object
     req.query = Model.findOne(req.params.id);
     if (
       (userRoles.includes('admin') && req.user.role === 'admin') ||
-      (['owner', 'user'].includes(req.user.role) && req.method === 'POST')
+      ((userRoles.includes('owner') || userRoles.includes('user')) && req.method === 'POST')
     ) {
       next();
     }

@@ -18,10 +18,7 @@ router
 router
   .route('/:id')
   .get(reviewController.getReview)
-  .patch(
-    reviewController.authoriseReviews('user', 'admin'),
-    reviewController.updateReview
-  )
+  .patch(reviewController.authoriseReviews('user', 'admin'), reviewController.updateReview)
   .delete(
     reviewController.authoriseReviews('user', 'admin'),
     reviewController.deleteReview
