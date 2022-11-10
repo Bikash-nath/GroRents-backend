@@ -1,12 +1,11 @@
 [
   {
-    "_id": "5c88fa8cf4afda39709c2955",
     "title": "2 BHK House for rent in Lakeview Apartments, Krishnanagar, Agartala",
     "houseNos": ["21A", "23B", "26A"],
     "carpetArea": 1200,
     "propertyType": "Flat",
     "availableFor": "Family",
-    "maxTenant": 4,
+    "maxTenants": 4,
     "price": 8500,
     "deposit": 24000,
     "negotiable": true,
@@ -17,7 +16,6 @@
     "facing": "East",
     "availability": "2022-09-22",
     "postedOn": "2022-08-12",
-    "address": "Krishnanagar, Agartala, Tripura (799002)",
     "imageCover": "house1-bedroom.jpg",
     "images": ["house1-bedroom.jpg", "house1-balcony.jpg"],
     "bedroomsCount": 2,
@@ -59,13 +57,12 @@
     "nearbyPlaces": ["Dimsagar Lake Park", "Xpressbees Courier Service"]
   },
   {
-    "_id": "5c88fa8cf4afda39709c2951",
     "title": "1 BHK Independent Builder Floor for rent in Indranagar, Agartala",
     "houseNos": ["111C", "112A", "115B"],
     "carpetArea": 500,
     "propertyType": "Apartment",
     "availableFor": "All",
-    "maxTenant": 2,
+    "maxTenants": 2,
     "price": 5800,
     "deposit": 18000,
     "negotiable": false,
@@ -76,7 +73,6 @@
     "flooring": "Tiles",
     "floorNo": "2/3",
     "facing": "North-East",
-    "address": "Banamalipur, Indranagar, Agartala",
     "imageCover": "house2-cover.webp",
     "images": [
       "house2-bedroom.webp",
@@ -97,7 +93,12 @@
       "Exhaust Fan",
       "Gas Pipeline"
     ],
-    "societyAmenity": ["Power Backup", "Water Supply: 24Hr Borewell", "Gated Security", "Terrace"],
+    "societyAmenity": [
+      "Power Backup",
+      "Water Supply: 24Hr Borewell",
+      "Gated Security",
+      "Terrace"
+    ],
     "nonVeg": true,
     "pets": false,
     "smoking": true,
@@ -110,13 +111,12 @@
     "nearbyPlaces": ["Volcan Club", "Central Jail"]
   },
   {
-    "_id": "5c88fa8cf4afda39709c295a",
     "title": "1 BHK Independent Villa for Rent in Dhaleswar, Agartala",
     "houseNos": ["477A", "477C", "480B"],
     "carpetArea": 550,
     "propertyType": "Apartment",
     "availableFor": "Bachelors",
-    "maxTenant": 2,
+    "maxTenants": 2,
     "price": 6990,
     "deposit": 24000,
     "negotiable": true,
@@ -127,7 +127,6 @@
     "facing": "South",
     "availability": "2022-09-22",
     "postedOn": "2022-08-12",
-    "address": "Banamalipur, Indranagar, Agartala",
     "imageCover": "house3.jpg",
     "images": [
       "house3-bedroom.jpg",

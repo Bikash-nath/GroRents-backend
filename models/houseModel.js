@@ -18,7 +18,7 @@ const houseSchema = new mongoose.Schema(
         select: false,
       },
     ],
-    slug: { type: String, unique: true },
+    slug: { type: String, trim: true },
     carpetArea: {
       type: Number, //In sq. feet
       required: [true, 'A house must have carpet/plot area'],
@@ -191,7 +191,7 @@ const houseSchema = new mongoose.Schema(
     nearbyPlaces: [String],
     ratingsAverage: {
       type: Number,
-      default: 0,
+      default: 1,
       min: [1, 'Rating must be above 1.0'],
       max: [5, 'Rating must be below 5.0'],
       set: (val) => Math.round(val * 10) / 10,

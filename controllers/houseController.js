@@ -6,7 +6,7 @@ exports.authoriseHouse = (...userRoles) => {
 };
 
 exports.setHouseFilter = (req, res, next) => {
-  req.filter = { _id: req.params.id };
+  // req.filter = { _id: req.params.id };
   next();
 };
 

@@ -1,11 +1,13 @@
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
+const House = require('../models/houseModel');
+const User = require('../models/userModel');
 
 exports.authoriseUser = (Model, userRoles) => {
   return (req, res, next) => {
     // const users=userRoles.reduce((u, r) => ({ ...u, [r]: r }), {});  //array -> object
-    req.query = Model.findOne(req.params.id);
+    req.query = doc = Model.findOne(req.params.id);
     if (
       (userRoles.includes('admin') && req.user.role === 'admin') ||
       ((userRoles.includes('owner') || userRoles.includes('user')) && req.method === 'POST')
@@ -42,10 +44,7 @@ exports.getOne = (Model, filter, popOptions) =>
 
 exports.getAll = (Model, filter = {}) =>
   catchAsync(async (req, res, next) => {
-    const features = new APIFeatures(Model.find(filter), req.query)
-      .filter()
-      .sort()
-      .limitFields();
+    const features = new APIFeatures(Model.find(), req.query).filter().sort().limitFields();
     const doc = await features.query;
 
     res.status(200).json({
