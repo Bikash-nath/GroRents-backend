@@ -8,16 +8,22 @@ exports.authoriseUser = (Model, userRoles) => {
   return (req, res, next) => {
     // const users=userRoles.reduce((u, r) => ({ ...u, [r]: r }), {});  //array -> object
     req.query = doc = Model.findOne(req.params.id);
+    console.log('userRoles', userRoles[0]);
+    console.log('req.user.role:', userRoles.includes('user'));
+    console.log('role ?:', req.user.role === userRoles[0]);
+    console.log('user :', req.user);
+    // console.log('doc:', doc);
     if (
       (userRoles.includes('admin') && req.user.role === 'admin') ||
-      ((userRoles.includes('owner') || userRoles.includes('user')) && req.method === 'POST')
+      (req.method === 'POST' && req.user.role === userRoles[0])
     ) {
-      next();
+      return next();
     }
     if (
       (doc.user || doc.owner || doc.guide) !== req.user.id ||
       !userRoles.includes(req.user.role)
     ) {
+      console.log('admin:', admin);
       return next(new AppError('You do not have permission to perform this action', 403));
     }
     next();

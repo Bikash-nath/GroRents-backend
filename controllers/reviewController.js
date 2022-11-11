@@ -16,6 +16,7 @@ exports.setHouseUserIds = (req, res, next) => {
   //set review id from query if not specified in body
   if (!req.body.house) req.body.house = req.params.houseId;
   if (!req.body.user) req.body.user = req.user.id; //from Protect middleware
+  console.log('Req:', req.body.house, '..', req.body.house);
   next();
 };
 
