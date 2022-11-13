@@ -4,6 +4,13 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
 
+exports.authoriseUser = (req, res, next) => {
+  console.log('role:', req.user.role);
+  factory.authoriseUser(User, [req.user.role])(req, res, next);
+  console.log('factory:', [req.user.role]);
+  next();
+};
+
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'public/img/users');
