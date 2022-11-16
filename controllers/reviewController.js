@@ -3,7 +3,7 @@ const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 
 exports.authoriseReviews = (...userRoles) => {
-  return factory.authoriseUser(Review, userRoles);
+  return factory.authoriseDoc(Review, userRoles);
 };
 
 exports.allReviewsFilter = (req, res, next) => {
@@ -16,7 +16,6 @@ exports.setHouseUserIds = (req, res, next) => {
   //set review id from query if not specified in body
   if (!req.body.house) req.body.house = req.params.houseId;
   if (!req.body.user) req.body.user = req.user.id; //from Protect middleware
-  console.log('Req:', req.body.house, '..', req.body.house);
   next();
 };
 
@@ -25,6 +24,31 @@ exports.getReview = factory.getOne(Review, { path: 'reviews' });
 exports.createReview = factory.createOne(Review);
 exports.updateReview = factory.updateOne(Review);
 exports.deleteReview = factory.deleteOne(Review);
+
+// exports.authoriseReviews = (...userRoles) =>
+//   catchAsync(async (req, res, next) => {
+//     const review = (req.query = await Review.findById(req.params.id));
+//     console.log('Review ID:', req.params.id, 'user', req.user.id);
+//     console.log('\n\n\nuserRoles', userRoles);
+//     console.log('user.role:', userRoles.includes(req.user.role));
+//     console.log('Review user:', review.user?._id === req.user.id);
+//     if (
+//       (userRoles.includes('admin') && req.user.role === 'admin') ||
+//       (req.method === 'POST' && req.user.role === userRoles[0])
+//     ) {
+//       return next();
+//     }
+//     if (review.user?._id != req.user.id || !userRoles.includes(req.user.role)) {
+//       return next(new AppError('You do not have permission to perform this action', 403));
+//     }
+//     next();
+//   });
+
+// exports.allReviewsFilter = (req, res, next) => {
+//   req.query = { filter: req.body.user };
+//   next();
+// };
+
 // exports.updateReview =[factory.authoriseUser(Review,['user', 'admin']), factory.updateOne];  //app.get("/", ...middlewares)
 
 // exports.verifyUser = (...roles) => {

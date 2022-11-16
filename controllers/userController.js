@@ -4,11 +4,9 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const factory = require('./handlerFactory');
 
-exports.authoriseUser = (req, res, next) => {
-  console.log('role:', req.user.role);
-  factory.authoriseUser(User, [req.user.role])(req, res, next);
-  console.log('factory:', [req.user.role]);
-  next();
+exports.authoriseUser = () => {
+  console.log('authoriseUser\n\n\n');
+  return factory.authoriseUser(User);
 };
 
 const multerStorage = multer.diskStorage({
@@ -35,6 +33,8 @@ exports.uploadUserPhoto = multer({
 }).single('photo');
 
 exports.getUser = catchAsync(async (req, res, next) => {
+  console.log('getUser params:', req.params, 'user-id', req.params.id);
+
   const user = await User.findById(req.params.id);
 
   if (!user) {

@@ -4,19 +4,14 @@ const APIFeatures = require('../utils/apiFeatures');
 const House = require('../models/houseModel');
 const User = require('../models/userModel');
 
-exports.authoriseUser = (Model, userRoles) =>
+exports.authoriseDoc = (Model, userRoles) =>
   catchAsync(async (req, res, next) => {
     // const users=userRoles.reduce((u, r) => ({ ...u, [r]: r }), {});  //array -> object
-    console.log('ID:', req.params.id);
     req.query = doc = await Model.findById(req.params.id);
-    console.log('\n\n\nuserRoles', userRoles[0]);
+    console.log('\nReq.params:', req.params, req.params.id, '\nReq.user', req.user.id);
+    console.log('..userRoles', userRoles);
     console.log('req.user.role:', userRoles.includes(req.user.role));
-    console.log('role ?:', req.user.role === userRoles[0]);
-    console.log(
-      'Doc:'
-      // (doc.user?._id || doc.owner?._id || doc.guide?._id || doc?._id) != req.user.id
-    );
-    console.log('user', req.user.id);
+    // console.log('Doc:', doc);
     if (
       (userRoles.includes('admin') && req.user.role === 'admin') ||
       (req.method === 'POST' && req.user.role === userRoles[0])
@@ -24,7 +19,7 @@ exports.authoriseUser = (Model, userRoles) =>
       return next();
     }
     if (
-      (doc.user?._id || doc.owner?._id || doc.guide?._id || doc?._id) != req.user.id ||
+      (doc.user?._id || doc.owner?._id || doc.guide?._id) != req.user.id ||
       !userRoles.includes(req.user.role)
     ) {
       return next(new AppError('You do not have permission to perform this action', 403));
@@ -32,9 +27,27 @@ exports.authoriseUser = (Model, userRoles) =>
     next();
   });
 
+exports.authoriseUser = (Model) =>
+  catchAsync(async (req, res, next) => {
+    const user = (req.query = await Model.findById(req.params.id || req.user.id));
+    const userRole = req.user.role;
+    console.log('\n\n\nUser ID:', req.params, 'user-id:', req.params.id);
+    console.log('userRole', userRole);
+    console.log('user.role:', userRole.includes(req.user.role));
+    console.log('User:', user.user?._id === req.user.id);
+    if (userRole === 'admin' || req.method === 'POST') {
+      return next();
+    }
+    if (user._id != req.user.id || !userRole === req.user.role) {
+      return next(new AppError('You do not have permission to perform this action', 403));
+    }
+    next();
+  });
+
 exports.getOne = (Model, filter, popOptions) =>
   catchAsync(async (req, res, next) => {
-    let query = Model.findOne(req.filter);
+    console.log('\n\n\nGetOne ID:', req.params, 'user-id:', req.params.id);
+    let query = Model.findById(req.params.id); //req.filter
     if (popOptions) query = query.populate(popOptions);
     const doc = await query;
 

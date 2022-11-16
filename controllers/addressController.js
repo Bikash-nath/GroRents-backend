@@ -2,8 +2,9 @@ const Address = require('../models/addressModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 
-exports.authoriseAddress = (...userRoles) => {
-  return factory.authoriseUser(Address, userRoles);
+exports.authoriseUser = () => {
+  console.log('authoriseUser\n\n\n');
+  return factory.authoriseUser(Address);
 };
 
 // Nested address routes

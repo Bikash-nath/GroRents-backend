@@ -4,7 +4,7 @@ const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 
 exports.authoriseBooking = (...userRoles) => {
-  return factory.authoriseUser(Booking, userRoles);
+  return factory.authoriseDoc(Booking, userRoles);
 };
 
 exports.createBookingCheckout = catchAsync(async (req, res, next) => {

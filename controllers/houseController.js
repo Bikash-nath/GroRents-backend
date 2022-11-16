@@ -2,7 +2,7 @@ const House = require('../models/houseModel');
 const factory = require('./handlerFactory');
 
 exports.authoriseHouse = (...userRoles) => {
-  return factory.authoriseUser(House, userRoles);
+  return factory.authoriseDoc(House, userRoles);
 };
 
 exports.setHouseFilter = (req, res, next) => {
@@ -15,6 +15,37 @@ exports.getHouse = factory.getOne(House, { path: 'reviews' });
 exports.createHouse = factory.createOne(House);
 exports.updateHouse = factory.updateOne(House);
 exports.deleteHouse = factory.deleteOne(House);
+
+// exports.authoriseHouse = exports.authoriseUsers = (...userRoles) =>
+//   catchAsync(async (req, res, next) => {
+//     const review = (req.query = await User.findById(req.params.id));
+//     console.log('User ID:', req.params.id, 'user', req.user.id);
+//     console.log(
+//       '\n\n\nuserRoles',
+//       userRoles[0],
+//       'user.role:',
+//       userRoles.includes(req.user.role)
+//     );
+//     console.log('User user:', review.user?._id === req.user.id);
+//     if (
+//       (userRoles.includes('admin') && req.user.role === 'admin') ||
+//       (req.method === 'POST' && req.user.role === userRoles[0])
+//     ) {
+//       return next();
+//     }
+//     if (
+//       (review.user?._id || doc?._id) != req.user.id ||
+//       !userRoles.includes(req.user.role)
+//     ) {
+//       return next(new AppError('You do not have permission to perform this action', 403));
+//     }
+//     next();
+//   });
+
+// exports.setHouseFilter = (req, res, next) => {
+//   // req.filter = { _id: req.params.id };
+//   next();
+// };
 
 // exports.getAllHouses = catchAsync(async (req, res, next) => {
 //   const features = new APIFeatures(House.find(), req.query).sort().limitFields();

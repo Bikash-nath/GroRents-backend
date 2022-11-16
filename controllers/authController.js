@@ -78,6 +78,8 @@ exports.logout = (req, res) => {
 };
 
 exports.protect = catchAsync(async (req, res, next) => {
+  console.log('protect User ID:', req.params, 'user-id:', req.params.id);
+
   // 1) Getting token from headers
   let token;
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
