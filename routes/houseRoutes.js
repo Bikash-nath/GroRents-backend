@@ -12,7 +12,7 @@ router
   .get(houseController.getAllHouses)
   .post(
     authController.protect,
-    houseController.authoriseHouse('owner'),
+    authController.restrictTo('owner'),
     houseController.createHouse
   );
 
@@ -21,12 +21,12 @@ router
   .get(authController.protect, houseController.getHouse)
   .patch(
     authController.protect,
-    houseController.authoriseHouse('owner', 'guides', 'admin'),
+    authController.restrictTo('owner', 'guides', 'admin'),
     houseController.updateHouse
   )
   .delete(
     authController.protect,
-    houseController.authoriseHouse('owner', 'admin'),
+    authController.restrictTo('owner', 'admin'),
     houseController.deleteHouse
   );
 

@@ -10,7 +10,7 @@ router
   .route('/')
   .get(reviewController.setHouseUserIds, reviewController.getAllReviews)
   .post(
-    reviewController.authoriseReviews('user'),
+    authController.restrictTo('user'),
     reviewController.setHouseUserIds,
     reviewController.createReview
   );
@@ -18,10 +18,7 @@ router
 router
   .route('/:id')
   .get(reviewController.getReview)
-  .patch(reviewController.authoriseReviews('user', 'admin'), reviewController.updateReview)
-  .delete(
-    reviewController.authoriseReviews('user', 'admin'),
-    reviewController.deleteReview
-  );
+  .patch(authController.restrictTo('user', 'admin'), reviewController.updateReview)
+  .delete(authController.restrictTo('user', 'admin'), reviewController.deleteReview);
 
 module.exports = router;

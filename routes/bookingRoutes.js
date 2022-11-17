@@ -9,21 +9,12 @@ router.use(authController.protect);
 router
   .route('/')
   .get(bookingController.getAllBookings)
-  .post(
-    bookingController.authoriseBooking('user'),
-    bookingController.createBookingCheckout
-  );
+  .post(authController.restrictTo('user'), bookingController.createBookingCheckout);
 
 router
   .route('/:id')
   .get(bookingController.getBooking)
-  .patch(
-    bookingController.authoriseBooking('owner', 'admin'),
-    bookingController.updateBooking
-  )
-  .delete(
-    bookingController.authoriseBooking('owner', 'admin'),
-    bookingController.deleteBooking
-  );
+  .patch(authController.restrictTo('owner', 'admin'), bookingController.updateBooking)
+  .delete(authController.restrictTo('owner', 'admin'), bookingController.deleteBooking);
 
 module.exports = router;

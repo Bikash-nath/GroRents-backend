@@ -3,10 +3,6 @@ const Booking = require('../models/bookingModel');
 const catchAsync = require('../utils/catchAsync');
 const factory = require('./handlerFactory');
 
-exports.authoriseBooking = (...userRoles) => {
-  return factory.authoriseDoc(Booking, userRoles);
-};
-
 exports.createBookingCheckout = catchAsync(async (req, res, next) => {
   const { houseId, price, paymentMethod, currency } = req.body;
   const user = req.user.id;

@@ -12,22 +12,22 @@ router
   .get(groceryController.getAllHouses)
   .post(
     authController.protect,
-    groceryController.authoriseGrocery('owner'),
-    groceryController.createHouse
+    authController.restrictTo('owner'),
+    groceryController.createGrocery
   );
 
 router
   .route('/:id')
-  .get(authController.protect, groceryController.getHouse)
+  .get(authController.protect, groceryController.getGrocery)
   .patch(
     authController.protect,
-    groceryController.authoriseGrocery('owner', 'admin'),
-    groceryController.updateHouse
+    authController.restrictTo('owner', 'admin'),
+    groceryController.updateGrocery
   )
   .delete(
     authController.protect,
-    groceryController.authoriseGrocery('owner', 'admin'),
-    groceryController.deleteHouse
+    authController.restrictTo('owner', 'admin'),
+    groceryController.deleteGrocery
   );
 
 module.exports = router;

@@ -71,7 +71,7 @@ exports.login = catchAsync(async (req, res, next) => {
 
 exports.logout = (req, res) => {
   res.cookie('jwt', 'loggedout', {
-    expires: new Date(Date.now() + 10 * 1000),
+    expires: new Date(Date.now() + 10 * 24 * 1000 * 60),
     httpOnly: true,
   });
   res.status(200).json({ status: 'success' });
@@ -113,6 +113,29 @@ exports.protect = catchAsync(async (req, res, next) => {
   req.user = currentUser;
   next();
 });
+
+exports.restrictTo = (roles) =>
+  catchAsync(async (req, res, next) => {
+    // const users=roles.reduce((u, r) => ({ ...u, [r]: r }), {});  //array -> object
+    // req.query = doc = await Model.findById(req.params.id);
+    console.log('\nReq.params:', req.params, req.params.id, '\nReq.user', req.user.id);
+    console.log('..roles', roles);
+    console.log('req.user.role:', roles.includes(req.user.role));
+    // console.log('Doc:', doc);
+    const userRole = req.user.role;
+    if (
+      (roles.includes('admin') && userRole === 'admin') ||
+      (req.method === 'POST' && userRole === roles[0])
+    ) {
+      return next();
+    }
+    // (doc.user?._id || doc.owner?._id || doc.guide?._id) != req.user.id
+    if (roles.includes(userRole)) {
+      req.filter = { userRole: req.body.user };
+      next();
+    }
+    return next(new AppError('You do not have permission to perform this action', 403));
+  });
 
 exports.forgotPassword = catchAsync(async (req, res, next) => {
   // 1) Get user based on POSTed email

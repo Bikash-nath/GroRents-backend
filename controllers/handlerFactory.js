@@ -4,51 +4,22 @@ const APIFeatures = require('../utils/apiFeatures');
 const House = require('../models/houseModel');
 const User = require('../models/userModel');
 
-exports.authoriseDoc = (Model, userRoles) =>
+exports.authoriseUser = () =>
   catchAsync(async (req, res, next) => {
-    // const users=userRoles.reduce((u, r) => ({ ...u, [r]: r }), {});  //array -> object
-    req.query = doc = await Model.findById(req.params.id);
-    console.log('\nReq.params:', req.params, req.params.id, '\nReq.user', req.user.id);
-    console.log('..userRoles', userRoles);
-    console.log('req.user.role:', userRoles.includes(req.user.role));
-    // console.log('Doc:', doc);
-    if (
-      (userRoles.includes('admin') && req.user.role === 'admin') ||
-      (req.method === 'POST' && req.user.role === userRoles[0])
-    ) {
-      return next();
-    }
-    if (
-      (doc.user?._id || doc.owner?._id || doc.guide?._id) != req.user.id ||
-      !userRoles.includes(req.user.role)
-    ) {
-      return next(new AppError('You do not have permission to perform this action', 403));
-    }
-    next();
-  });
-
-exports.authoriseUser = (Model) =>
-  catchAsync(async (req, res, next) => {
-    const user = (req.query = await Model.findById(req.params.id || req.user.id));
-    const userRole = req.user.role;
     console.log('\n\n\nUser ID:', req.params, 'user-id:', req.params.id);
-    console.log('userRole', userRole);
-    console.log('user.role:', userRole.includes(req.user.role));
-    console.log('User:', user.user?._id === req.user.id);
+
+    const userRole = req.user.role;
     if (userRole === 'admin' || req.method === 'POST') {
       return next();
     }
-    if (user._id != req.user.id || !userRole === req.user.role) {
-      return next(new AppError('You do not have permission to perform this action', 403));
-    }
-    next();
+    return next(new AppError('You do not have permission to perform this action', 403));
   });
 
 exports.getOne = (Model, filter, popOptions) =>
   catchAsync(async (req, res, next) => {
-    console.log('\n\n\nGetOne ID:', req.params, 'user-id:', req.params.id);
-    let query = Model.findById(req.params.id); //req.filter
-    if (popOptions) query = query.populate(popOptions);
+    console.log('GetOne ID:', req.params, 'user-id:', req.params.id, '\n\n');
+    let query = Model.findOne({ _id: req.params.id, ...req.filter });
+    if (popOptions) query = query.populate(spopOptions);
     const doc = await query;
 
     if (!doc) {

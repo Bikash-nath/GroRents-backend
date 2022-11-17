@@ -2,10 +2,6 @@ const Review = require('../models/reviewModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 
-exports.authoriseReviews = (...userRoles) => {
-  return factory.authoriseDoc(Review, userRoles);
-};
-
 exports.allReviewsFilter = (req, res, next) => {
   req.query = { filter: req.body.user };
   next();

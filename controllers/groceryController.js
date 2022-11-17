@@ -1,10 +1,6 @@
 // const Grocery = require('../models/groceryModel');
 const factory = require('./handlerFactory');
 
-exports.authoriseGrocery = (...userRoles) => {
-  // return factory.authoriseUser(Grocery, userRoles);
-};
-
 exports.setGroceryFilter = (req, res, next) => {
   req.filter = { _id: req.params.id };
   next();

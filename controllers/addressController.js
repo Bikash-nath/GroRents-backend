@@ -2,11 +2,6 @@ const Address = require('../models/addressModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 
-exports.authoriseUser = () => {
-  console.log('authoriseUser\n\n\n');
-  return factory.authoriseUser(Address);
-};
-
 // Nested address routes
 exports.setAddressUserIds = (req, res, next) => {
   //set address id from query if not specified in body
