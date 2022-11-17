@@ -78,8 +78,6 @@ exports.logout = (req, res) => {
 };
 
 exports.protect = catchAsync(async (req, res, next) => {
-  console.log('protect User ID:', req.params, 'user-id:', req.params.id);
-
   // 1) Getting token from headers
   let token;
   if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
@@ -114,14 +112,10 @@ exports.protect = catchAsync(async (req, res, next) => {
   next();
 });
 
-exports.restrictTo = (roles) =>
+exports.restrictTo = (...roles) =>
   catchAsync(async (req, res, next) => {
     // const users=roles.reduce((u, r) => ({ ...u, [r]: r }), {});  //array -> object
-    // req.query = doc = await Model.findById(req.params.id);
-    console.log('\nReq.params:', req.params, req.params.id, '\nReq.user', req.user.id);
-    console.log('..roles', roles);
-    console.log('req.user.role:', roles.includes(req.user.role));
-    // console.log('Doc:', doc);
+    console.log('Roles:', roles, roles.includes(req.user.role));
     const userRole = req.user.role;
     if (
       (roles.includes('admin') && userRole === 'admin') ||
@@ -129,10 +123,10 @@ exports.restrictTo = (roles) =>
     ) {
       return next();
     }
-    // (doc.user?._id || doc.owner?._id || doc.guide?._id) != req.user.id
     if (roles.includes(userRole)) {
-      req.filter = { userRole: req.body.user };
-      next();
+      req.userFilter = { [userRole]: req.user.id };
+      console.log('Req.Filter:', req.userFilter, '\n\n');
+      return next();
     }
     return next(new AppError('You do not have permission to perform this action', 403));
   });

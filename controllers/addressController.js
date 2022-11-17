@@ -2,6 +2,13 @@ const Address = require('../models/addressModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 
+exports.restrictUserAddress = catchAsync(async (req, res, next) => {
+  console.log('\nReq.params:', req.params, req.params.id, '\nReq.user', req.user.id);
+  const userRole = req.user.role;
+  req.filter = { [userRole]: req.user.id };
+  next();
+});
+
 // Nested address routes
 exports.setAddressUserIds = (req, res, next) => {
   //set address id from query if not specified in body

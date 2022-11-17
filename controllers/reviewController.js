@@ -2,11 +2,6 @@ const Review = require('../models/reviewModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 
-exports.allReviewsFilter = (req, res, next) => {
-  req.query = { filter: req.body.user };
-  next();
-};
-
 // Nested review routes
 exports.setHouseUserIds = (req, res, next) => {
   //set review id from query if not specified in body
@@ -15,35 +10,28 @@ exports.setHouseUserIds = (req, res, next) => {
   next();
 };
 
-exports.getAllReviews = factory.getAll(Review);
+exports.getUserReviews = factory.getAll(Review);
 exports.getReview = factory.getOne(Review, { path: 'reviews' });
-exports.createReview = factory.createOne(Review);
 exports.updateReview = factory.updateOne(Review);
 exports.deleteReview = factory.deleteOne(Review);
 
-// exports.authoriseReviews = (...userRoles) =>
-//   catchAsync(async (req, res, next) => {
-//     const review = (req.query = await Review.findById(req.params.id));
-//     console.log('Review ID:', req.params.id, 'user', req.user.id);
-//     console.log('\n\n\nuserRoles', userRoles);
-//     console.log('user.role:', userRoles.includes(req.user.role));
-//     console.log('Review user:', review.user?._id === req.user.id);
-//     if (
-//       (userRoles.includes('admin') && req.user.role === 'admin') ||
-//       (req.method === 'POST' && req.user.role === userRoles[0])
-//     ) {
-//       return next();
-//     }
-//     if (review.user?._id != req.user.id || !userRoles.includes(req.user.role)) {
-//       return next(new AppError('You do not have permission to perform this action', 403));
-//     }
-//     next();
-//   });
+exports.createReview = catchAsync(async (req, res) => {
+  const newReview = await Review.create({
+    title: req.body.title,
+    description: req.body.description,
+    rating: req.body.rating,
+    house: req.body.house,
+    user: req.user.id,
+  });
+  const review = await Review.create(newReview);
 
-// exports.allReviewsFilter = (req, res, next) => {
-//   req.query = { filter: req.body.user };
-//   next();
-// };
+  res.status(201).json({
+    status: 'success',
+    data: {
+      data: review,
+    },
+  });
+});
 
 // exports.updateReview =[factory.authoriseUser(Review,['user', 'admin']), factory.updateOne];  //app.get("/", ...middlewares)
 
