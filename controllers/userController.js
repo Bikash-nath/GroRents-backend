@@ -3,6 +3,7 @@ const User = require('../models/userModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const filterObj = require('../utils/filterObject');
 
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -59,20 +60,12 @@ exports.getMe = () => {
   return factory.getOne(User);
 };
 
-const filterObj = (obj, ...allowedFields) => {
-  const newObj = {};
-  Object.keys(obj).forEach((el) => {
-    if (allowedFields.includes(el)) newObj[el] = obj[el];
-  });
-  return newObj;
-};
-
 exports.updateMe = catchAsync(async (req, res, next) => {
   // 1) Create error if user POSTs password data
   if (req.body.password || req.body.passwordConfirm) {
     return next(
       new AppError(
-        'This route is not for password updates. Please use /users/updatePassword.',
+        'Please use Password Update page / Forgot Password to update your password.',
         400
       )
     );

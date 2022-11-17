@@ -125,7 +125,6 @@ exports.restrictTo = (...roles) =>
     }
     if (roles.includes(userRole)) {
       req.userFilter = { [userRole]: req.user.id };
-      console.log('Req.Filter:', req.userFilter, '\n\n');
       return next();
     }
     return next(new AppError('You do not have permission to perform this action', 403));

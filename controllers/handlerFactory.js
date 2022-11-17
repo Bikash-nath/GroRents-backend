@@ -1,8 +1,7 @@
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
-const House = require('../models/houseModel');
-const User = require('../models/userModel');
+const filterObj = require('../utils/filterObject');
 
 exports.getOne = (Model, filter, popOptions) =>
   catchAsync(async (req, res, next) => {
@@ -44,7 +43,8 @@ exports.getAll = (Model, filter = {}) =>
 
 exports.createOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.create(req.body);
+    const user = filterObj(req.body, Object.keys(req.userFilter)[0]);
+    const doc = await Model.create({ user, ...req.userFilter });
 
     res.status(201).json({
       status: 'success',
