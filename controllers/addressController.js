@@ -3,8 +3,7 @@ const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 
 exports.restrictUserAddress = catchAsync(async (req, res, next) => {
-  const userRole = req.user.role;
-  req.filter = { [userRole]: req.user.id };
+  req.userFilter = { [req.user.role]: req.user.id };
   next();
 });
 
@@ -18,6 +17,10 @@ exports.setAddressUserIds = (req, res, next) => {
 
 exports.getAllAddresss = factory.getAll(Address);
 exports.getAddress = factory.getOne(Address, { path: 'reviews' });
-exports.createAddress = factory.createOne(Address);
 exports.updateAddress = factory.updateOne(Address);
 exports.deleteAddress = factory.deleteOne(Address);
+
+exports.createAddress = catchAsync(async (req, res, next) => {
+  req.body.address = await Address.create(req.body);
+  return next();
+});

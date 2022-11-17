@@ -97,3 +97,14 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
     data: null,
   });
 });
+
+exports.addUserAddress = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.params.id);
+  const address = req.body.address;
+  user.address = address._id;
+  user.save();
+  res.status(201).json({
+    status: 'success',
+    data: { address },
+  });
+});

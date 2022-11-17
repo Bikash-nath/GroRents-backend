@@ -23,7 +23,7 @@ exports.getOne = (Model, filter, popOptions) =>
     });
   });
 
-exports.getAll = (Model, filter = {}) =>
+exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
     const features = new APIFeatures(Model.find(), { ...req.query, ...req.userFilter })
       .filter()
@@ -43,9 +43,8 @@ exports.getAll = (Model, filter = {}) =>
 
 exports.createOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    const user = filterObj(req.body, Object.keys(req.userFilter)[0]);
-    const doc = await Model.create({ user, ...req.userFilter });
-
+    const filteredDoc = filterObj(req.body, Object.keys(req.userFilter)[0]);
+    const doc = await Model.create({ ...filteredDoc, ...req.userFilter });
     res.status(201).json({
       status: 'success',
       data: {

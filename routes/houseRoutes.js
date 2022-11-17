@@ -2,10 +2,12 @@ const express = require('express');
 const houseController = require('../controllers/houseController');
 const authController = require('../controllers/authController');
 const reviewRouter = require('../routes/reviewRoutes');
+const addressRouter = require('../routes/addressRoutes');
 
 const router = express.Router();
 
-router.use('/:houseId/reviews', reviewRouter); // allow Nested review routes
+router.use('/:houseId/reviews', reviewRouter); // Nested review routes
+router.use('/:houseId/address', addressRouter, houseController.addHouseAddress); // Nested address routes
 
 router
   .route('/')
