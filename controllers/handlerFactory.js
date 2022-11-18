@@ -6,8 +6,8 @@ const filterObj = require('../utils/filterObject');
 exports.getOne = (Model, filter, popOptions) =>
   catchAsync(async (req, res, next) => {
     console.log('GetOne ID:', req.params, 'user-id:', req.params.id);
-    console.log('Filter:', req.userFilter, '\n\n');
-    let query = Model.findOne({ _id: req.params.id, ...req.userFilter });
+    console.log('Filter:', req.docFilter, '\n\n');
+    let query = Model.findOne({ _id: req.params.id, ...req.docFilter });
     if (popOptions) query = query.populate(popOptions);
     const doc = await query;
 
@@ -25,7 +25,7 @@ exports.getOne = (Model, filter, popOptions) =>
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
-    const features = new APIFeatures(Model.find(), { ...req.query, ...req.userFilter })
+    const features = new APIFeatures(Model.find(), { ...req.query, ...req.docFilter })
       .filter()
       .sort()
       .limitFields();
@@ -43,8 +43,8 @@ exports.getAll = (Model) =>
 
 exports.createOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    const filteredDoc = filterObj(req.body, Object.keys(req.userFilter)[0]);
-    const doc = await Model.create({ ...filteredDoc, ...req.userFilter });
+    const filteredDoc = filterObj(req.body, Object.keys(req.docFilter)[0]);
+    const doc = await Model.create({ ...filteredDoc, ...req.docFilter });
     res.status(201).json({
       status: 'success',
       data: {
@@ -56,7 +56,7 @@ exports.createOne = (Model) =>
 exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
     const doc = await Model.findOneAndUpdate(
-      { _id: req.params.id, ...req.filter },
+      { _id: req.params.id, ...req.docFilter },
       req.body
     );
     // const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
@@ -78,7 +78,7 @@ exports.updateOne = (Model) =>
 
 exports.deleteOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.findOneAndDelete({ _id: req.params.id, ...req.filter });
+    const doc = await Model.findOneAndDelete({ _id: req.params.id, ...req.docFilter });
     // const doc = await Model.findByIdAndDelete(req.params.id);
 
     if (!doc) {

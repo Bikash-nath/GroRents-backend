@@ -5,8 +5,6 @@ const reviewRouter = require('./reviewRoutes');
 
 const router = express.Router();
 
-router.use('/:groceryId/reviews', reviewRouter); // allow Nested review routes
-
 router
   .route('/')
   .get(groceryController.getAllHouses)
@@ -29,5 +27,7 @@ router
     authController.restrictTo('owner', 'admin'),
     groceryController.deleteGrocery
   );
+
+router.use('/:groceryId/reviews', reviewRouter); // allow Nested review routes
 
 module.exports = router;

@@ -8,7 +8,7 @@ router.use(authController.protect);
 
 router
   .route('/')
-  .get(bookingController.getAllBookings)
+  .get(bookingController.filterBooking, bookingController.getAllBookings)
   .post(authController.restrictTo('user'), bookingController.createBookingCheckout);
 
 router

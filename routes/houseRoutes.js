@@ -6,9 +6,6 @@ const addressRouter = require('../routes/addressRoutes');
 
 const router = express.Router();
 
-router.use('/:houseId/reviews', reviewRouter); // Nested review routes
-router.use('/:houseId/address', addressRouter, houseController.addHouseAddress); // Nested address routes
-
 router
   .route('/')
   .get(houseController.getAllHouses)
@@ -31,5 +28,12 @@ router
     authController.restrictTo('owner', 'admin'),
     houseController.deleteHouse
   );
+
+// Nested routes
+router.route('/:houseId/reviews').get(reviewRouter);
+router
+  .route('/:houseId/address')
+  .get(houseController.filterHouseAddress, addressRouter)
+  .post(addressRouter, houseController.addHouseAddress);
 
 module.exports = router;

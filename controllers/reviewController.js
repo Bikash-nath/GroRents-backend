@@ -2,6 +2,15 @@ const Review = require('../models/reviewModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 
+exports.filterReviews = catchAsync(async (req, res, next) => {
+  if (req.params.houseId) {
+    req.docFilter = { house: req.params.houseId };
+  } else {
+    req.docFilter = { user: req.user.id };
+  }
+  next();
+});
+
 // Nested review routes
 exports.setHouseUserIds = (req, res, next) => {
   //set review id from query if not specified in body

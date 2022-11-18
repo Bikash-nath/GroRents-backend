@@ -2,8 +2,12 @@ const Address = require('../models/addressModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 
-exports.restrictUserAddress = catchAsync(async (req, res, next) => {
-  req.userFilter = { [req.user.role]: req.user.id };
+exports.restrictUserOrHouseAddress = catchAsync(async (req, res, next) => {
+  //Filter not functional -> house/user field is not present
+  //Use Nested Routes insted
+  if (req.params.houseId) {
+    // req.docFilter = { [req.user.role]: req.user.id };
+  }
   next();
 });
 
