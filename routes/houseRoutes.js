@@ -17,7 +17,7 @@ router
 
 router
   .route('/:id')
-  .get(authController.protect, houseController.getHouse)
+  .get(houseController.getHouse)
   .patch(
     authController.protect,
     authController.restrictTo('owner', 'guides', 'admin'),
@@ -33,7 +33,9 @@ router
 router.route('/:houseId/reviews').get(reviewRouter);
 router
   .route('/:houseId/address')
-  .get(houseController.filterHouseAddress, addressRouter)
-  .post(addressRouter, houseController.addHouseAddress);
+  .get(houseController.getUserAddress, addressRouter)
+  .post(addressRouter, houseController.saveHouseAddress)
+  .patch(houseController.getUserAddress, addressRouter)
+  .delete(houseController.getUserAddress, addressRouter);
 
 module.exports = router;

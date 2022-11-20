@@ -8,13 +8,13 @@ exports.createHouse = factory.createOne(House);
 exports.updateHouse = factory.updateOne(House);
 exports.deleteHouse = factory.deleteOne(House);
 
-exports.filterHouseAddress = catchAsync(async (req, res, next) => {
+exports.getUserAddress = catchAsync(async (req, res, next) => {
   const house = await House.findById(req.params.houseId);
-  req.originalURL += `/:${house.address}`;
+  res.redirect(`/:${house.address}`); //req.originalURL
   next();
 });
 
-exports.addHouseAddress = catchAsync(async (req, res, next) => {
+exports.saveHouseAddress = catchAsync(async (req, res, next) => {
   const house = await House.findById(req.params.id);
   const address = req.body.address;
   house.address = address._id;

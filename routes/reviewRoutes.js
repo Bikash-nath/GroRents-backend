@@ -15,6 +15,7 @@ router
   .post(authController.restrictTo('user'), reviewController.createReview);
 
 router.use(authController.restrictTo('user', 'admin'));
+router.use(reviewController.filterReviews);
 router
   .route('/:id')
   .get(reviewController.getReview)

@@ -2,7 +2,7 @@ const express = require('express');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const addressRouter = require('../routes/addressRoutes');
-const reviewRouter = require('../routes/reviewRoutes');
+// const reviewRouter = require('../routes/reviewRoutes');
 
 const router = express.Router({ mergeParams: true });
 
@@ -23,12 +23,11 @@ router.delete('/deleteMe', userController.deleteMe);
 router.route('/:id').get(userController.getUser);
 
 // Nested Address routes; User Reviews handled at filterReviews
-router.use(userController.verifyUserAddress);
 router
-  .route('/:userId/address')
-  .get(addressRouter)
-  .post(addressRouter, userController.addUserAddress)
-  .patch(addressRouter)
-  .delete(addressRouter);
+  .route('/me/address')
+  .get(userController.getUserAddress, addressRouter)
+  .post(addressRouter, userController.saveUserAddress)
+  .patch(userController.getUserAddress, addressRouter)
+  .delete(userController.getUserAddress, addressRouter);
 
 module.exports = router;

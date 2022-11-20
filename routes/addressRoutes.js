@@ -9,8 +9,8 @@ router.use(addressController.restrictUserAddress);
 
 router
   .route('/')
-  .get(addressController.setAddressUserIds, addressController.getAllAddresss)
-  .post(addressController.setAddressUserIds, addressController.createAddress);
+  .get(addressController.getAllAddresss)
+  .post(addressController.createAddress);
 
 router
   .route('/:id')

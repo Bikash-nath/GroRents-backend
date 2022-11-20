@@ -5,6 +5,23 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const filterObj = require('../utils/filterObject');
 
+exports.getUserAddress = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+  res.redirect(`/:${house.address}`); //req.originalURL
+  next();
+});
+
+exports.saveUserAddress = catchAsync(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+  const address = req.body.address;
+  user.address = address._id;
+  user.save();
+  res.status(201).json({
+    status: 'success',
+    data: { address },
+  });
+});
+
 const multerStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'public/img/users');
