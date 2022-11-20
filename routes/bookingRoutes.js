@@ -11,6 +11,8 @@ router
   .get(bookingController.filterBooking, bookingController.getAllBookings)
   .post(authController.restrictTo('user'), bookingController.createBookingCheckout);
 
+router.use(bookingController.filterBooking);
+
 router
   .route('/:id')
   .get(bookingController.getBooking)
