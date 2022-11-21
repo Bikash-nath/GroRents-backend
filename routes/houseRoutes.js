@@ -33,7 +33,7 @@ router
 router.route('/:houseId/reviews').get(reviewRouter);
 router
   .route('/:houseId/address')
-  .get(houseController.getUserAddress, addressRouter)
+  .get(houseController.getUserAddress)
   .post(addressRouter, houseController.saveHouseAddress)
   .patch(houseController.getUserAddress, addressRouter)
   .delete(houseController.getUserAddress, addressRouter);

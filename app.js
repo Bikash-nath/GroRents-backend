@@ -30,6 +30,7 @@ app.use((req, res, next) => {
 app.use('/api/houses', houseRouter);
 app.use('/api/users', userRouter);
 app.use('/api/reviews', reviewRouter);
+app.use('/api/address', addressRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
