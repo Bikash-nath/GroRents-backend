@@ -10,8 +10,8 @@ exports.deleteHouse = factory.deleteOne(House);
 
 exports.getUserAddress = catchAsync(async (req, res, next) => {
   const house = await House.findById(req.params.houseId);
-  res.redirect(`/api/address/:${house.address._id}`); //req.originalURL
-  next();
+  res.redirect(`/api/address/${house.address._id}`); //req.originalURL
+  // next();
 });
 
 exports.saveHouseAddress = catchAsync(async (req, res, next) => {

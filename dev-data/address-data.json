@@ -1,3 +1,62 @@
-// "address": "Krishnanagar, Agartala, Tripura (799002)",
-// "address": "Banamalipur, Indranagar, Agartala",
-// "address": "Banamalipur, Indranagar, Agartala",
+[
+  {
+    "houseNo": "R7H7+RRG",
+    "street": "Dashamighat, H.G.B. Road",
+    "area": "Joynagar",
+    "pincode": 799001,
+    "city": "Agartala",
+    "district": "West Tripura",
+    "state": "Tripura",
+    "country": "India"
+  },
+  {
+    "houseNo": "R7WH+J5G",
+    "street": "Abhoynagar Road",
+    "area": "Abhay Nagar",
+    "pincode": 799005,
+    "city": "Agartala",
+    "district": "West Tripura",
+    "state": "Tripura",
+    "country": "India"
+  },
+  {
+    "houseNo": "R7QV+998",
+    "street": "",
+    "area": "Indranagar",
+    "pincode": 799001,
+    "city": "Agartala",
+    "district": "West Tripura",
+    "state": "Tripura",
+    "country": "India"
+  },
+  {
+    "houseNo": "R7GQ+XV4",
+    "street": "Shibnagar",
+    "area": "Ramakrishna Nagar",
+    "pincode": 799001,
+    "city": "Agartala",
+    "district": "West Tripura",
+    "state": "Tripura",
+    "country": "India"
+  },
+  {
+    "houseNo": "R8UT+PV8",
+    "street": "Ashram Chowmuhani",
+    "area": "Dhaleswar",
+    "pincode": 799007,
+    "city": "Agartala",
+    "district": "West Tripura",
+    "state": "Tripura",
+    "country": "India"
+  },
+  {
+    "houseNo": "RW1D+JT5",
+    "street": "Salbagan road",
+    "area": "Salbagan",
+    "pincode": 799012,
+    "city": "Agartala",
+    "district": "West Tripura",
+    "state": "Tripura",
+    "country": "India"
+  }
+]

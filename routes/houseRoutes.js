@@ -30,7 +30,7 @@ router
   );
 
 // Nested routes
-router.route('/:houseId/reviews').get(reviewRouter);
+router.use('/:houseId/reviews', reviewRouter);
 router
   .route('/:houseId/address')
   .get(houseController.getUserAddress)

@@ -5,29 +5,20 @@ const filterObj = require('../utils/filterObject');
 
 exports.getOne = (Model, filter, popOptions) =>
   catchAsync(async (req, res, next) => {
-    console.log('GetOne ID:', req.params, 'user-id:', req.params.id);
-    console.log('Filter:', req.docFilter, '\n\n');
-    console.log('id:', req.params.id, '\n');
-    console.log('id:', req.params.id, '\n');
-    console.log('Address:', Model, '\n');
-
-    const add = await Model.findB(req.params.id);
-    console.log('Address:', add, '\n');
-
     let query = Model.findOne({ _id: req.params.id, ...req.docFilter });
     if (popOptions) query = query.populate(popOptions);
     const doc = await query;
 
-    // if (!doc) {
-    //   return next(new AppError(`No ${Model} found with that ID`, 404));
-    // }
+    if (!doc) {
+      return next(new AppError(`No ${Model} found with that ID`, 404));
+    }
 
-    // res.status(200).json({
-    //   status: 'success',
-    //   data: {
-    //     data: doc,
-    //   },
-    // });
+    res.status(200).json({
+      status: 'success',
+      data: {
+        data: doc,
+      },
+    });
   });
 
 exports.getAll = (Model) =>
