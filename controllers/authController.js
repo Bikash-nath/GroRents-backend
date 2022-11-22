@@ -114,13 +114,11 @@ exports.protect = catchAsync(async (req, res, next) => {
 
 exports.restrictTo = (...roles) =>
   catchAsync(async (req, res, next) => {
-    // const users=roles.reduce((u, r) => ({ ...u, [r]: r }), {});  //array -> object
-    console.log('Roles:', roles, roles.includes(req.user.role));
     const userRole = req.user.role;
-    if (
-      (roles.includes('admin') && userRole === 'admin') ||
-      (req.method === 'POST' && userRole === roles[0])
-    ) {
+    if (roles.includes('admin') && userRole === 'admin') {
+      next(); //need to pass admin doc filter
+    } else if (req.method === 'POST' && userRole === roles[0]) {
+      req.docFilter = { [userRole]: req.user.id };
       return next();
     }
     if (roles.includes(userRole)) {

@@ -46,8 +46,6 @@ exports.uploadUserPhoto = multer({
 }).single('photo');
 
 exports.getUser = catchAsync(async (req, res, next) => {
-  console.log('getUser params:', req.params, 'user-id', req.params.id);
-
   const user = await User.findById(req.params.id);
 
   if (!user) {
