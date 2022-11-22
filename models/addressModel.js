@@ -8,7 +8,8 @@ const addressSchema = new mongoose.Schema({
   street: String,
   area: String, //P.O.
   pincode: {
-    type: Number,
+    type: String,
+    minlength: 6,
     maxlength: 6,
   },
   city: String,
