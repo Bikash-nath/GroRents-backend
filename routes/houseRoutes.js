@@ -33,9 +33,9 @@ router
 router.use('/:houseId/reviews', reviewRouter);
 router
   .route('/:houseId/address')
-  .get(houseController.getUserAddress)
+  .get(houseController.getHouseAddress, addressRouter)
   .post(addressRouter, houseController.saveHouseAddress)
-  .patch(houseController.getUserAddress, addressRouter)
-  .delete(houseController.getUserAddress, addressRouter);
+  .patch(houseController.getHouseAddress, addressRouter)
+  .delete(houseController.getHouseAddress, addressRouter);
 
 module.exports = router;

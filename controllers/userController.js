@@ -7,8 +7,10 @@ const filterObj = require('../utils/filterObject');
 
 exports.getUserAddress = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id);
-  res.redirect(`/:${house.address}`); //req.originalURL
-  next();
+  if (!user.address) {
+    return next(new AppError('No address found', 404));
+  }
+  res.redirect(`/api/address/${user.address._id}`);
 });
 
 exports.saveUserAddress = catchAsync(async (req, res, next) => {

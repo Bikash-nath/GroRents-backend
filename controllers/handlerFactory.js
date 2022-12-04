@@ -3,7 +3,7 @@ const AppError = require('../utils/appError');
 const APIFeatures = require('../utils/apiFeatures');
 const filterObj = require('../utils/filterObject');
 
-exports.getOne = (Model, filter, popOptions) =>
+exports.getOne = (Model, popOptions) =>
   catchAsync(async (req, res, next) => {
     let query = Model.findOne({ _id: req.params.id, ...req.docFilter });
     if (popOptions) query = query.populate(popOptions);

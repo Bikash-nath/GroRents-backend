@@ -9,5 +9,6 @@ exports.deleteAddress = factory.deleteOne(Address);
 
 exports.createAddress = catchAsync(async (req, res, next) => {
   req.body.address = await Address.create(req.body);
-  return next();
+  console.log(req.body.address);
+  return next(); //use res.send() for not nested routes
 });
