@@ -14,7 +14,7 @@ const houseSchema = new mongoose.Schema(
     houseNos: [
       {
         type: String,
-        booked: false,
+        booked: false, //reserved
         select: false,
       },
     ],

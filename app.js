@@ -1,6 +1,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const compression = require('compression');
+const cookieParser = require('cookie-parser');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -8,7 +9,6 @@ const houseRouter = require('./routes/houseRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const addressRouter = require('./routes/addressRoutes');
-const cookieParser = require('cookie-parser');
 
 const app = express();
 
