@@ -32,12 +32,26 @@ router
 
 // Nested routes
 router.use('/:houseId/reviews', reviewRouter);
+
+router.use(authController.protect);
 router
   .route('/:houseId/address')
-  .get(houseController.getHouseAddress, addressRouter)
-  .post(addressController.createAddress, houseController.saveHouseAddress)
-  .patch(houseController.getHouseAddress, addressController.updateAddress)
-  .delete(houseController.getHouseAddress, router.use(addressRouter));
+  .get(houseController.getHouseAddress, addressController.getAddress)
+  .post(
+    addressController.createAddress,
+    authController.restrictTo('owner'),
+    houseController.saveHouseAddress
+  )
+  .patch(
+    houseController.getHouseAddress,
+    authController.restrictTo('owner', 'admin'),
+    addressController.updateAddress
+  )
+  .delete(
+    houseController.getHouseAddress,
+    authController.restrictTo('owner', 'admin'),
+    addressController.deleteAddress
+  );
 
 // router.use('/:houseId/address', addressRouter, houseController.saveHouseAddress);  //router.use(addressRouter)
 

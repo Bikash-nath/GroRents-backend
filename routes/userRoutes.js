@@ -2,6 +2,7 @@ const express = require('express');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const addressRouter = require('../routes/addressRoutes');
+const reviewRouter = require('../routes/reviewRoutes');
 
 const router = express.Router({ mergeParams: true });
 
@@ -20,6 +21,8 @@ router.patch('/updateMe', userController.updateMe);
 router.delete('/deleteMe', userController.deleteMe);
 
 router.route('/:id').get(userController.getUser);
+
+router.use('/me/reviews', userController.setUserId, reviewRouter);
 
 router
   .route('/me/address')

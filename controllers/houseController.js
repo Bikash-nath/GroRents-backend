@@ -13,10 +13,11 @@ exports.getHouseAddress = catchAsync(async (req, res, next) => {
   if (!house.address) {
     return next(new AppError('No address found', 404));
   }
-  req.body.address = house.address._id;
-  console.log('address:--', req.body.address);
-  next();
-  // res.redirect(`/api/address/${house.address._id}`); //use if req.method is not changed to get (code: 200)
+  // req.body.address = house.address._id;
+  // console.log('address:--', req.body.address);
+
+  // next();
+  res.redirect(307, `/api/address/${house.address._id}`); //use if req.method is not changed to get (code: 200)
 });
 
 exports.saveHouseAddress = catchAsync(async (req, res, next) => {

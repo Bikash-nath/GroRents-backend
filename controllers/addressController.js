@@ -2,13 +2,12 @@ const Address = require('../models/addressModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 
-exports.setAddressId = catchAsync(async (req, res, next) => {
-  if (req.params.id) {
-    req.params.id = req.body.address;
-  }
-  console.log('address-id:', req.params.id);
-  next();
-});
+// exports.setAddressId = catchAsync(async (req, res, next) => {
+//   if (req.params.id) {
+//     req.params.id = req.body.address;
+//   }
+//   next();
+// });
 
 exports.getAllAddresss = factory.getAll(Address);
 exports.getAddress = factory.getOne(Address);
