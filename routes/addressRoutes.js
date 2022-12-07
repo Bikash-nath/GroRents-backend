@@ -13,6 +13,8 @@ router
   .get(addressController.getAllAddresss)
   .post(addressController.createAddress);
 
+router.use(addressController.setAddressId);
+
 router
   .route('/:id')
   .get(addressController.getAddress)

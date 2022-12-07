@@ -1,6 +1,7 @@
 const express = require('express');
 const houseController = require('../controllers/houseController');
 const authController = require('../controllers/authController');
+const addressController = require('../controllers/addressController');
 const reviewRouter = require('../routes/reviewRoutes');
 const addressRouter = require('../routes/addressRoutes');
 
@@ -34,8 +35,10 @@ router.use('/:houseId/reviews', reviewRouter);
 router
   .route('/:houseId/address')
   .get(houseController.getHouseAddress, addressRouter)
-  .post(addressRouter, houseController.saveHouseAddress)
-  .patch(houseController.getHouseAddress, addressRouter)
-  .delete(houseController.getHouseAddress, addressRouter);
+  .post(addressController.createAddress, houseController.saveHouseAddress)
+  .patch(houseController.getHouseAddress, addressController.updateAddress)
+  .delete(houseController.getHouseAddress, router.use(addressRouter));
+
+// router.use('/:houseId/address', addressRouter, houseController.saveHouseAddress);  //router.use(addressRouter)
 
 module.exports = router;

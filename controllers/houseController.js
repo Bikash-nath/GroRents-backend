@@ -13,14 +13,16 @@ exports.getHouseAddress = catchAsync(async (req, res, next) => {
   if (!house.address) {
     return next(new AppError('No address found', 404));
   }
-  res.redirect(`/api/address/${house.address._id}`);
+  req.body.address = house.address._id;
+  console.log('address:--', req.body.address);
+  next();
+  // res.redirect(`/api/address/${house.address._id}`); //use if req.method is not changed to get (code: 200)
 });
 
 exports.saveHouseAddress = catchAsync(async (req, res, next) => {
-  const house = await House.findById(req.params.id);
   const address = req.body.address;
-  house.address = address._id;
-  house.save();
+  const house = await House.findByIdAndUpdate(req.params.houseId, { address: address._id });
+
   res.status(201).json({
     status: 'success',
     data: { address },

@@ -63,10 +63,11 @@ exports.updateOne = (Model) =>
     // });
 
     if (!doc) {
+      console.log(doc);
       return next(new AppError(`No ${Model} found with that ID`, 404));
     }
 
-    res.status(200).json({
+    res.status(201).json({
       status: 'success',
       data: {
         data: doc,
