@@ -67,6 +67,7 @@ const userSchema = new mongoose.Schema({
   deleted: {
     type: Boolean,
     default: false,
+    select: false,
   },
   devices: [
     {

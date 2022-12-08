@@ -8,6 +8,7 @@ const globalErrorHandler = require('./controllers/errorController');
 const houseRouter = require('./routes/houseRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const cors = require('cors');
 
 const app = express();
 
@@ -15,6 +16,10 @@ const app = express();
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev')); //to log req/res info
 }
+
+//Implement CORS
+app.use(cors());
+// app.options('*', cors());
 
 app.use(compression());
 app.use(express.json());
