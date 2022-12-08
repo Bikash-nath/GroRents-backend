@@ -5,19 +5,25 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const filterObj = require('../utils/filterObject');
 
+exports.setUserId = (req, res, next) => {
+  req.params.id = req.user.id;
+  next();
+};
+
 exports.getUserAddress = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.user.id);
   if (!user.address) {
     return next(new AppError('No address found', 404));
   }
-  res.redirect(`/api/address/${user.address._id}`);
+  req.params.id = user.address._id;
+  next();
+  // res.redirect(`/api/address/${user.address._id}`);
 });
 
 exports.saveUserAddress = catchAsync(async (req, res, next) => {
-  const user = await User.findById(req.user.id);
   const address = req.body.address;
-  user.address = address._id;
-  user.save();
+  const house = await User.findByIdAndUpdate(req.user.id, { address: address._id });
+
   res.status(201).json({
     status: 'success',
     data: { address },
@@ -67,11 +73,6 @@ exports.getUser = catchAsync(async (req, res, next) => {
     },
   });
 });
-
-exports.setUserId = (req, res, next) => {
-  req.params.id = req.user.id;
-  next();
-};
 
 exports.getMe = () => {
   return factory.getOne(User);

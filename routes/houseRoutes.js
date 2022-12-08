@@ -3,7 +3,6 @@ const houseController = require('../controllers/houseController');
 const authController = require('../controllers/authController');
 const addressController = require('../controllers/addressController');
 const reviewRouter = require('../routes/reviewRoutes');
-const addressRouter = require('../routes/addressRoutes');
 
 const router = express.Router();
 

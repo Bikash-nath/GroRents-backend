@@ -67,7 +67,7 @@ exports.updateOne = (Model) =>
       return next(new AppError(`No ${Model} found with that ID`, 404));
     }
 
-    res.status(201).json({
+    res.status(200).json({
       status: 'success',
       data: {
         data: doc,

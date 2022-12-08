@@ -1,7 +1,7 @@
 const express = require('express');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
-const addressRouter = require('../routes/addressRoutes');
+const addressController = require('../controllers/addressController');
 const reviewRouter = require('../routes/reviewRoutes');
 
 const router = express.Router({ mergeParams: true });
@@ -22,13 +22,12 @@ router.delete('/deleteMe', userController.deleteMe);
 
 router.route('/:id').get(userController.getUser);
 
-router.use('/me/reviews', userController.setUserId, reviewRouter);
-
+//Nested routes
 router
-  .route('/me/address')
-  .get(userController.getUserAddress, addressRouter)
-  .post(addressRouter, userController.saveUserAddress)
-  .patch(userController.getUserAddress, addressRouter)
-  .delete(userController.getUserAddress, addressRouter);
+  .route('/:houseId/address')
+  .get(userController.getUserAddress, addressController.getAddress)
+  .post(addressController.createAddress, userController.saveUserAddress)
+  .patch(userController.getUserAddress, addressController.updateAddress)
+  .delete(userController.getUserAddress, addressController.deleteAddress);
 
 module.exports = router;
