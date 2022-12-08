@@ -1,7 +1,7 @@
 {
   "name": "grorents",
   "version": "1.0.0",
-  "description": "A web platform which connects flat and property owners with tenants and buyers directly, thereby making buying, selling, and renting of properties simpler, convenient and affordable.",
+  "description": "A backend for rentals & grocery which connects property owners with tenants and buyers directly, thereby making buying, selling, and renting of properties simpler, convenient and affordable.",
   "main": "app.js",
   "scripts": {
     "start": "node server.js",
