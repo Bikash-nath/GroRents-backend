@@ -64,6 +64,10 @@ const userSchema = new mongoose.Schema({
   passwordChangedAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
+  deleted: {
+    type: Boolean,
+    default: false,
+  },
   devices: [
     {
       name: String,

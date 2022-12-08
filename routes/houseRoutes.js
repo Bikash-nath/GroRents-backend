@@ -29,6 +29,10 @@ router
     houseController.deleteHouse
   );
 
+router
+  .route('/houses-within/:distance/center/:latlng')
+  .get(houseController.getHousesWithin);
+
 // Nested routes
 router.use('/:houseId/reviews', reviewRouter);
 
