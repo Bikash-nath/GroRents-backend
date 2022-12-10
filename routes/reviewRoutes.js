@@ -7,11 +7,7 @@ const router = express.Router({ mergeParams: true });
 router.use(authController.protect);
 router
   .route('/')
-  .get(
-    reviewController.filterReviews,
-    reviewController.setHouseUserIds,
-    reviewController.getUserReviews
-  )
+  .get(reviewController.filterReviews, reviewController.setHouseUserIds, reviewController.getUserReviews)
   .post(authController.restrictTo('user'), reviewController.createReview);
 
 router.use(authController.restrictTo('user', 'admin'));

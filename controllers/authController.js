@@ -97,9 +97,7 @@ exports.protect = catchAsync(async (req, res, next) => {
   const currentUser = await User.findById(decoded.id);
 
   if (!currentUser) {
-    return next(
-      new AppError('The user belonging to this token does no longer exist.', 401)
-    );
+    return next(new AppError('The user belonging to this token does no longer exist.', 401));
   }
 
   // 4) Check if user changed password after the token was issued
@@ -140,9 +138,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   await user.save({ validateBeforeSave: false });
 
   // 3) Send it to user's email
-  const resetURL = `${req.protocol}://${req.get(
-    'host'
-  )}/api/users/resetPassword/${resetToken}`;
+  const resetURL = `${req.protocol}://${req.get('host')}/api/users/resetPassword/${resetToken}`;
 
   const message = `Forgot your password? Submit a PATCH request before 10 minutes with your New password and passwordConfirm to: ${resetURL}.\nIf you didn't forget your password, please ignore this email!`;
   console.warn('message:-', message);
@@ -163,10 +159,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
     user.passwordReset = undefined;
     await user.save({ validateBeforeSave: false });
 
-    return next(
-      new AppError('There was an error sending the email. Try again later!'),
-      500
-    );
+    return next(new AppError('There was an error sending the email. Try again later!'), 500);
   }
 });
 

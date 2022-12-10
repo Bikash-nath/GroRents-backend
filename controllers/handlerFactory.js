@@ -23,10 +23,7 @@ exports.getOne = (Model, popOptions) =>
 
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
-    const features = new APIFeatures(Model.find(), { ...req.query, ...req.docFilter })
-      .filter()
-      .sort()
-      .limitFields();
+    const features = new APIFeatures(Model.find(), { ...req.query, ...req.docFilter }).filter().sort().limitFields();
 
     const doc = await features.query;
 
@@ -53,10 +50,7 @@ exports.createOne = (Model) =>
 
 exports.updateOne = (Model) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.findOneAndUpdate(
-      { _id: req.params.id, ...req.docFilter },
-      req.body
-    );
+    const doc = await Model.findOneAndUpdate({ _id: req.params.id, ...req.docFilter }, req.body);
     // const doc = await Model.findByIdAndUpdate(req.params.id, req.body, {
     //   new: true,
     //   runValidators: true,   //doc.save()

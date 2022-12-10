@@ -22,6 +22,8 @@ router.delete('/deleteMe', userController.deleteMe);
 router.route('/:id').get(userController.getUser);
 
 //Nested routes
+router.route('/me/houses').get(userController.getUser);
+
 router
   .route('/:houseId/address')
   .get(userController.getUserAddress, addressController.getAddress)
