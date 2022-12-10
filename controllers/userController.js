@@ -17,7 +17,6 @@ exports.getUserAddress = catchAsync(async (req, res, next) => {
   }
   req.params.id = user.address._id;
   next();
-  // res.redirect(`/api/address/${user.address._id}`);
 });
 
 exports.saveUserAddress = catchAsync(async (req, res, next) => {
