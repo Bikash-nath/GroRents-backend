@@ -19,7 +19,7 @@ if (process.env.NODE_ENV === 'development') {
 
 //Implement CORS
 app.use(cors());
-// app.options('*', cors());
+app.options('*', cors());
 
 app.use(compression());
 app.use(express.json());

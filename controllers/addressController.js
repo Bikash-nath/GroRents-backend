@@ -2,7 +2,7 @@ const Address = require('../models/addressModel');
 const factory = require('./handlerFactory');
 const catchAsync = require('../utils/catchAsync');
 
-// exports.getAllAddresss = factory.getAll(Address);
+// exports.getAllAddresss = factory.getAll(Address);  //Get all addresses of user
 exports.getAddress = factory.getOne(Address);
 exports.updateAddress = factory.updateOne(Address);
 exports.deleteAddress = factory.deleteOne(Address);

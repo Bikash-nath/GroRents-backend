@@ -56,6 +56,4 @@ router
     addressController.deleteAddress
   );
 
-// router.use('/:houseId/address', addressRouter, houseController.saveHouseAddress);  //router.use(addressRouter)
-
 module.exports = router;

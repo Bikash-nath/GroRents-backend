@@ -40,7 +40,6 @@ exports.getHouseAddress = catchAsync(async (req, res, next) => {
   }
   req.params.id = house.address._id;
   next();
-  // res.redirect(307, `/api/address/${house.address._id}`); //use if req.method is not changed to get (code: 200)
 });
 
 exports.saveHouseAddress = catchAsync(async (req, res, next) => {
