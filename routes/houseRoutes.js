@@ -28,10 +28,6 @@ router
   .get(houseController.getHouseAddress, addressController.getAddress)
   .post(addressController.createAddress, authController.restrictTo('owner'), houseController.saveHouseAddress)
   .patch(houseController.getHouseAddress, authController.restrictTo('owner', 'admin'), addressController.updateAddress)
-  .delete(
-    houseController.getHouseAddress,
-    authController.restrictTo('owner', 'admin'),
-    addressController.deleteAddress
-  );
+  .delete(houseController.getHouseAddress, authController.restrictTo('owner', 'admin'), addressController.deleteAddress);
 
 module.exports = router;
