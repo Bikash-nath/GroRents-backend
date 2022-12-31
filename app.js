@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const compression = require('compression');
 const cookieParser = require('cookie-parser');
+const helmet = require('helmet');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
@@ -17,13 +18,18 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev')); //to log req/res info
 }
 
+//Set security HTTP headers
+app.use(helmet());
+
 //Implement CORS
 app.use(cors());
 app.options('*', cors());
 
-app.use(compression());
-app.use(express.json());
+//Body parser
+app.use(express.json({ limit: '10kb' }));
+
 app.use(cookieParser());
+app.use(compression());
 
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
