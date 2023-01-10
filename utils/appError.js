@@ -1,3 +1,4 @@
+//To return formatted Operational errors
 class AppError extends Error {
   constructor(message, statusCode) {
     super(message);

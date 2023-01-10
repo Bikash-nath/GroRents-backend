@@ -9,8 +9,7 @@ exports.createHouse = factory.createOne(House);
 exports.updateHouse = factory.updateOne(House);
 exports.deleteHouse = factory.deleteOne(House);
 
-// /houses-within/:distance/center/:latlng
-// /houses-within/233/center/34.111745,-118.113491
+// /houses-within/:distance/:latlng:- /houses-within/233/34.111745,-118.113491
 exports.getHousesWithin = catchAsync(async (req, res, next) => {
   const { distance, latlng, unit } = req.params;
   const [lat, lng] = latlng.split(',');

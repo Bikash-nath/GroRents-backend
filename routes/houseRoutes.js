@@ -17,7 +17,7 @@ router
   .patch(authController.protect, authController.restrictTo('owner', 'guides', 'admin'), houseController.updateHouse)
   .delete(authController.protect, authController.restrictTo('owner', 'admin'), houseController.deleteHouse);
 
-router.route('/houses-within/:distance/center/:latlng').get(houseController.getHousesWithin);
+router.route('/houses-within/:distance/:latlng').get(houseController.getHousesWithin);
 
 // Nested routes
 router.use('/:houseId/reviews', reviewRouter);
